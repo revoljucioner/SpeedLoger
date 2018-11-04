@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Log.Pages.RecordsListPage" Title="Records List">
+	<StackLayout>
+		<ListView x:Name="recordsList" ItemsSource="{Binding}" 
+		          SelectedItem="{Binding SelectedTrack, Mode=TwoWay}" 
+		          HasUnevenRows="True"
+		          ItemSelected="OnItemSelected">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<ViewCell.View>
+							<StackLayout>
+								<Label Text="{Binding Id}" FontSize="Small" />
+								<Label Text="{Binding StartDateTime}" FontSize="Small" />
+								<!--<Button Text="Open" BackgroundColor="Gray" HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="OnOpenClicked" />-->
+							</StackLayout>
+						</ViewCell.View>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</StackLayout>
+</ContentPage>
