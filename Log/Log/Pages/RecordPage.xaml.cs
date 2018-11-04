@@ -5,8 +5,8 @@ using Log.DependenciesOS;
 using Log.Locators;
 using Log.Models;
 using Newtonsoft.Json;
-using Plugin.Geolocator.Abstractions;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace Log.Pages
 {
@@ -15,7 +15,7 @@ namespace Log.Pages
         private readonly DateTime startTimeConst;
         private Track track;
         private List<SnappedPoint> snappedPointRequestList;
-        Locator locator;
+        ILocator locator;
 
         public RecordPage()
         {
@@ -34,15 +34,13 @@ namespace Log.Pages
 
             IDevice device = DependencyService.Get<IDevice>();
             track = new Track { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
-            //
             snappedPointRequestList = new List<SnappedPoint>();
-            locator = new Locator(1, TimeSpan.FromMilliseconds(100));
-            //
+            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
         }
 
         private async void OnTimerTick()
         {
-            var position = await locator.GetLocationAsync();
+            var position = await locator.GetPositionAsync();
             FillTrackModel(position);
             FillFormFields(position);
         }

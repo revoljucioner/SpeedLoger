@@ -5,21 +5,22 @@ using Plugin.Geolocator.Abstractions;
 
 namespace Log.Locators
 {
-    class Locator
+    class LocatorPluginGeolocator : ILocator
     {
         private IGeolocator geolocator;
         private TimeSpan _timeout;
 
-        public Locator(int desiredAccuracy, TimeSpan timeout)
+        public LocatorPluginGeolocator(int desiredAccuracy, TimeSpan timeout)
         {
             geolocator = CrossGeolocator.Current;
             geolocator.DesiredAccuracy = desiredAccuracy;
             _timeout = timeout;
         }
-        public async Task<Position> GetLocationAsync()
+        public async Task<Xamarin.Forms.Maps.Position> GetPositionAsync()
         {
-            var position = await geolocator.GetPositionAsync(timeout: _timeout);
-            return position;
+            Plugin.Geolocator.Abstractions.Position positionGeolocator = await geolocator.GetPositionAsync(timeout: _timeout);
+            var positionXamarinMaps  = new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
+            return positionXamarinMaps;
         }
     }
 }
