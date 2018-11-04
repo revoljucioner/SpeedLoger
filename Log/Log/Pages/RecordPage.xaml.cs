@@ -35,11 +35,12 @@ namespace Log.Pages
             IDevice device = DependencyService.Get<IDevice>();
             track = new Track { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
             snappedPointRequestList = new List<SnappedPoint>();
-            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
+            //locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
         }
 
         private async void OnTimerTick()
         {
+            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
             var position = await locator.GetPositionAsync();
             FillTrackModel(position);
             FillFormFields(position);
