@@ -47,19 +47,21 @@ namespace Log.Droid
         {
             for (var i = 1; i < SnappedPointsList.Count; i++)
             {
-                var snappedPointStart = SnappedPointsList[i-1];
-                var snappedPointEnd = SnappedPointsList[i];
-
-                var speed = GetSpeedBetweenPoints(snappedPointStart, snappedPointEnd);
-
-                var polylineOptions = new PolylineOptions();
-                polylineOptions.InvokeColor(MapColorsCollection.GetColorForSpeed(speed));
-
-                polylineOptions.Add(new LatLng(snappedPointStart.Position.Latitude, snappedPointStart.Position.Longitude));
-                polylineOptions.Add(new LatLng(snappedPointEnd.Position.Latitude, snappedPointEnd.Position.Longitude));
-
-                NativeMap.AddPolyline(polylineOptions);
+                DrawPolyline(SnappedPointsList[i - 1], SnappedPointsList[i]);
             }
+        }
+
+        private void DrawPolyline(SnappedPoint snappedPointStart, SnappedPoint snappedPointEnd)
+        {
+            var speed = GetSpeedBetweenPoints(snappedPointStart, snappedPointEnd);
+
+            var polylineOptions = new PolylineOptions();
+            polylineOptions.InvokeColor(MapColorsCollection.GetColorForSpeed(speed));
+
+            polylineOptions.Add(new LatLng(snappedPointStart.Position.Latitude, snappedPointStart.Position.Longitude));
+            polylineOptions.Add(new LatLng(snappedPointEnd.Position.Latitude, snappedPointEnd.Position.Longitude));
+
+            NativeMap.AddPolyline(polylineOptions);
         }
 
         private double GetSpeedBetweenPoints(SnappedPoint snappedPointStart, SnappedPoint snappedPointEnd)
