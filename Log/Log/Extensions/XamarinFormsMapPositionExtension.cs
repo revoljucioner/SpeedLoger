@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Device.Location;
-using System.Text;
+﻿using System.Device.Location;
 using Xamarin.Forms.Maps;
 
 namespace Log.Extensions
@@ -12,6 +9,12 @@ namespace Log.Extensions
         {
             var geoCoordinate = new GeoCoordinate(position.Latitude, position.Longitude);
             return geoCoordinate;
+        }
+
+        public static bool IsNull(this Position position)
+        {
+            var isNull = (position.Latitude == 0) && (position.Longitude == 0);
+            return isNull;
         }
     }
 }

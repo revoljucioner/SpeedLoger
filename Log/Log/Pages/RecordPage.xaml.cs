@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Log.DependenciesOS;
+using Log.Extensions;
 using Log.Locators;
 using Log.Models;
 using Newtonsoft.Json;
@@ -14,7 +15,12 @@ namespace Log.Pages
     {
         private readonly DateTime startTimeConst;
         private Track track;
-        private List<SnappedPoint> snappedPointRequestList;
+
+        private Position previousPosition;
+
+        private List<SnappedPoint> snappedPointRequestList = new List<SnappedPoint>() { };
+        // meters
+        private double minDifferenceBetweenPoints = 10;
         ILocator locator;
 
         public RecordPage()
@@ -25,23 +31,22 @@ namespace Log.Pages
 
             startTime.Text = startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
+            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
+
             Device.StartTimer(TimeSpan.FromMilliseconds(0.5), () =>
             {
                 OnTimerTick();
-
                 return true; // True = Repeat again, False = Stop the timer
             });
 
             IDevice device = DependencyService.Get<IDevice>();
             track = new Track { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
-            snappedPointRequestList = new List<SnappedPoint>();
-            //locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
         }
 
         private async void OnTimerTick()
         {
-            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
             var position = await locator.GetPositionAsync();
+
             FillTrackModel(position);
             FillFormFields(position);
         }
@@ -60,9 +65,16 @@ namespace Log.Pages
 
         private void FillTrackModel(Position position)
         {
-            var location = new Xamarin.Forms.Maps.Position(position.Longitude, position.Latitude);
-            var snappedPoint = new SnappedPoint { Position = location, Time = DateTime.UtcNow };
-            snappedPointRequestList.Add(snappedPoint);
+            if (!previousPosition.IsNull())
+            {
+                var distance = previousPosition.ToGeoLocation().GetDistanceTo(position.ToGeoLocation());
+                if (distance >= minDifferenceBetweenPoints)
+                {
+                    var snappedPoint = new SnappedPoint(position, DateTime.UtcNow);
+                    snappedPointRequestList.Add(snappedPoint);
+                }
+            }
+            previousPosition = position;
         }
 
         private void FillFormFields(Position position)
