@@ -7,7 +7,7 @@ namespace Log
         // 0x66 + RGB hex
         public static int[] ColorArray = new[]
         {
-            0x66FFFFFF, // красный
+            0x66FFFFFF, // черный
             0x66FF0000, // красный
             0x66FFA500, // оранжевый
             0x66FFD700, // оранжевый

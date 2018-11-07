@@ -8,7 +8,7 @@ namespace Log.Helpers
         public static int TestTrackId;
         public static void CreateTestTracks(Track track)
         {
-            DropDataInDb();
+            //DropDataInDb();
             TestTrackId =  App.Database.SaveItem(track);
         }
 
