@@ -29,7 +29,7 @@ namespace Log
 
         public static int GetColorForSpeed(double speed)
         {
-            var color = SpeedColorIntervalsArray.First(i => i.LeftSpeedBorder <= speed && i.RightSpeedBorder > speed).Color;
+            var color = SpeedColorIntervalsArray.First(i => i.LeftSpeedBorder <= speed && i.RightSpeedBorder > speed).SpeedColor;
             return color;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Device.Location;
 using System.Linq;
-using Log.Elements;
 using Log.Models;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -19,16 +18,22 @@ namespace Log.Pages
             customMap.SnappedPointsList =
                 JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
 
-            DrawSpeedColorBoxesLayout(0, 100);
+            var positions = customMap.SnappedPointsList.Select(i => i.Time);
+
+            DrawSpeedColorBoxesLayout(15, 65);
             SizeChanged += MoveToRegion;
         }
 
         private void DrawSpeedColorBoxesLayout(double minSpeed, double maxSpeed)
         {
-            var speedBox10to20 = new SpeedColorBox(Color.Red, "10 - 20");
-            var speedBox20t030 = new SpeedColorBox(Color.Red, "20 - 30");
-            SpeedColorBoxesLayout.Children.Add(speedBox10to20);
-            SpeedColorBoxesLayout.Children.Add(speedBox20t030);
+            var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(i => i.LeftSpeedBorder <= maxSpeed && i.RightSpeedBorder >= minSpeed);
+            speedColorIntervals.First().LeftSpeedBorder = minSpeed;
+            speedColorIntervals.Last().RightSpeedBorder = maxSpeed;
+
+            foreach (var speedColorInterval in speedColorIntervals)
+            {
+                SpeedColorBoxesLayout.Children.Add(speedColorInterval.ToSpeedColorBox());
+            }
         }
 
         private void MoveToRegion(object sender, EventArgs e)
@@ -55,7 +60,7 @@ namespace Log.Pages
                 ? trackHeight
                 : trackWidth * trackDimension / pageDimension / 2;
 
-            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters((1/borderCoeficient)*diameterMeters)));
+            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters((1 / borderCoeficient) * diameterMeters)));
         }
     }
 }
