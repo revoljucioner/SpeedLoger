@@ -10,7 +10,7 @@ namespace Log
             0x66FFFFFF, // черный
             0x66FF0000, // красный
             0x66FFA500, // оранжевый
-            0x66FFD700, // оранжевый
+            0x66FFD700, // желтый
             0x6600BFFF, // deepskyblue               
             0x660000FF, // синий
             0x668000FF // purple

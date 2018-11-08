@@ -10,6 +10,7 @@ namespace Log.Pages
 {
     public partial class MapPage : ContentPage
     {
+        private double borderCoeficient = 0.8;
         public MapPage(Track track)
         {
             InitializeComponent();
@@ -18,8 +19,6 @@ namespace Log.Pages
                 JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
 
             SizeChanged += MoveToRegion;
-
-            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(customMap.SnappedPointsList.First().Position, Distance.FromMiles(1.0)));
         }
 
         private void MoveToRegion(object sender, EventArgs e)
@@ -41,17 +40,12 @@ namespace Log.Pages
 
             var centerPosition = new Position(avgLatitude, avgLongitude);
 
-            double diameterMeters;
-            if (pageDimension >= trackDimension)
-            {
-                diameterMeters = trackHeight;
-            }
-            else
-            {
-                diameterMeters = trackWidth* trackDimension/ pageDimension/2;
-            }
+            var diameterMeters =
+                pageDimension >= trackDimension
+                ? trackHeight
+                : trackWidth * trackDimension / pageDimension / 2;
 
-            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters(diameterMeters)));
+            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters((1/borderCoeficient)*diameterMeters)));
         }
     }
 }
