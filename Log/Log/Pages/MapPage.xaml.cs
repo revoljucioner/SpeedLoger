@@ -20,7 +20,7 @@ namespace Log.Pages
 
             var positions = customMap.SnappedPointsList.Select(i => i.Time);
 
-            //DrawSpeedColorBoxesLayout(10, 65);
+            DrawSpeedColorBoxesLayout(10, 65);
             SizeChanged += MoveToRegion;
         }
 
