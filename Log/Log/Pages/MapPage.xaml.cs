@@ -20,19 +20,20 @@ namespace Log.Pages
 
             var positions = customMap.SnappedPointsList.Select(i => i.Time);
 
-            DrawSpeedColorBoxesLayout(15, 65);
+            //DrawSpeedColorBoxesLayout(10, 65);
             SizeChanged += MoveToRegion;
         }
 
         private void DrawSpeedColorBoxesLayout(double minSpeed, double maxSpeed)
         {
             var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(i => i.LeftSpeedBorder <= maxSpeed && i.RightSpeedBorder >= minSpeed);
-            speedColorIntervals.First().LeftSpeedBorder = minSpeed;
-            speedColorIntervals.Last().RightSpeedBorder = maxSpeed;
+            //speedColorIntervals.First().LeftSpeedBorder = Math.Floor(minSpeed);
+            //speedColorIntervals.Last().RightSpeedBorder = Math.Ceiling(maxSpeed);
 
             foreach (var speedColorInterval in speedColorIntervals)
             {
-                SpeedColorBoxesLayout.Children.Add(speedColorInterval.ToSpeedColorBox());
+                var speedColorBox = speedColorInterval.ToSpeedColorBox();
+                SpeedColorBoxesLayout.Children.Add(speedColorBox);
             }
         }
 
