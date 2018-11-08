@@ -2,9 +2,8 @@
 using System.Device.Location;
 using Android.Content;
 using Android.Gms.Maps.Model;
-using Android.Util;
-using Log;
 using Log.Droid;
+using Log.Elements;
 using Log.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;

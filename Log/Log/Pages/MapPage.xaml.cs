@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Location;
 using System.Linq;
+using Log.Elements;
 using Log.Models;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -18,7 +19,16 @@ namespace Log.Pages
             customMap.SnappedPointsList =
                 JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
 
+            DrawSpeedColorBoxesLayout(0, 100);
             SizeChanged += MoveToRegion;
+        }
+
+        private void DrawSpeedColorBoxesLayout(double minSpeed, double maxSpeed)
+        {
+            var speedBox10to20 = new SpeedColorBox(Color.Red, "10 - 20");
+            var speedBox20t030 = new SpeedColorBox(Color.Red, "20 - 30");
+            SpeedColorBoxesLayout.Children.Add(speedBox10to20);
+            SpeedColorBoxesLayout.Children.Add(speedBox20t030);
         }
 
         private void MoveToRegion(object sender, EventArgs e)
