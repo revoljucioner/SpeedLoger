@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Device.Location;
 using System.Linq;
-using Android.Util;
 using Log.Models;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -18,31 +17,12 @@ namespace Log.Pages
             customMap.SnappedPointsList =
                 JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
 
-            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(customMap.SnappedPointsList.First().Position,
-                Distance.FromMiles(1.0)));
             SizeChanged += MoveToRegion;
 
             customMap.MoveToRegion(MapSpan.FromCenterAndRadius(customMap.SnappedPointsList.First().Position, Distance.FromMiles(1.0)));
         }
 
-        void MoveToRegion(object sender, EventArgs e)
-        {
-            var pageDimension = GetPageDimension();
-            var trackDimension = GetTrackDimension();
-
-
-            //customMap.MoveToRegion(MapSpan.FromCenterAndRadius(customMap.SnappedPointsList.First().Position, Distance.FromMiles(1.0)));
-            //customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters(diameterMeters)));
-        }
-
-        private double GetPageDimension()
-        {
-            var screenWidth = Width;
-            var screenHeight = Height;
-            return Height / Width;
-        }
-
-        private double GetTrackDimension()
+        private void MoveToRegion(object sender, EventArgs e)
         {
             var latitudeMin = customMap.SnappedPointsList.Select(i => i.Position.Latitude).Min();
             var latitudeMax = customMap.SnappedPointsList.Select(i => i.Position.Latitude).Max();
@@ -53,11 +33,25 @@ namespace Log.Pages
             var avgLatitude = (latitudeMin + latitudeMax) / 2;
             var avgLongitude = (longitudeMin + longitudeMax) / 2;
 
-            var trackWidth = new GeoCoordinate(latitudeMin , avgLongitude).GetDistanceTo(new GeoCoordinate(latitudeMax, avgLongitude));
-            var trackHeight = new GeoCoordinate(avgLatitude, longitudeMin).GetDistanceTo(new GeoCoordinate(avgLatitude, longitudeMax));
-            var trackDimension = trackHeight/ trackWidth;
+            var trackWidth = new GeoCoordinate(avgLatitude, longitudeMin).GetDistanceTo(new GeoCoordinate(avgLatitude, longitudeMax));
+            var trackHeight = new GeoCoordinate(latitudeMin, avgLongitude).GetDistanceTo(new GeoCoordinate(latitudeMax, avgLongitude));
 
-            return trackDimension;
+            var trackDimension = trackHeight / trackWidth;
+            var pageDimension = Height / Width;
+
+            var centerPosition = new Position(avgLatitude, avgLongitude);
+
+            double diameterMeters;
+            if (pageDimension >= trackDimension)
+            {
+                diameterMeters = trackHeight;
+            }
+            else
+            {
+                diameterMeters = trackWidth* trackDimension/ pageDimension/2;
+            }
+
+            customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters(diameterMeters)));
         }
     }
 }

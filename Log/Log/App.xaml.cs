@@ -28,10 +28,12 @@ namespace Log
             MainPage = new NavigationPage(new MainPage());
 
             // For testing:
-		    TestHelper.CreateTestTracks(TrackStorage.GetCommonSanFranciscoTrack);
-		}
+		    TestHelper.DropDataInDb();
+		    TestHelper.CreateTestTrack(TrackStorage.CommonSanFranciscoTrack);
+		    TestHelper.CreateTestTrack(TrackStorage.FromLesnayaToPushkinaTrack);
+        }
 
-		protected override void OnStart ()
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}
