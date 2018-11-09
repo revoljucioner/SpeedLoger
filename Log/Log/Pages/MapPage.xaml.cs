@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Device.Location;
 using System.Linq;
 using Log.Extensions;
@@ -12,14 +13,16 @@ namespace Log.Pages
     public partial class MapPage : ContentPage
     {
         private double borderCoeficient = 0.8;
+        private List<SnappedPoint> _snappedPointsList;
+
         public MapPage(Track track)
         {
             InitializeComponent();
 
-            customMap.SnappedPointsList =
+            _snappedPointsList =
                 JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
 
-            customMap.PolylineSegmentList = customMap.SnappedPointsList.ToPolylineSegmentList();
+            customMap.PolylineSegmentList = _snappedPointsList.ToPolylineSegmentList();
 
             DrawSpeedColorBoxesLayout(10, 65);
             SizeChanged += MoveToRegion;
@@ -27,9 +30,14 @@ namespace Log.Pages
 
         private void DrawSpeedColorBoxesLayout(double minSpeed, double maxSpeed)
         {
-            var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(i => i.LeftSpeedBorder <= maxSpeed && i.RightSpeedBorder >= minSpeed);
+            //var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(i => i.LeftSpeedBorder <= maxSpeed && i.RightSpeedBorder >= minSpeed);
             //speedColorIntervals.First().LeftSpeedBorder = Math.Floor(minSpeed);
             //speedColorIntervals.Last().RightSpeedBorder = Math.Ceiling(maxSpeed);
+
+            //
+            var speeds = customMap.PolylineSegmentList.Select(i=>i.SpeedBetweenPoints());
+            var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(sci => speeds.Any(speed=>speed<= sci.RightSpeedBorder&&speed>sci.LeftSpeedBorder));
+            //
 
             foreach (var speedColorInterval in speedColorIntervals)
             {
@@ -40,11 +48,11 @@ namespace Log.Pages
 
         private void MoveToRegion(object sender, EventArgs e)
         {
-            var latitudeMin = customMap.SnappedPointsList.Select(i => i.Position.Latitude).Min();
-            var latitudeMax = customMap.SnappedPointsList.Select(i => i.Position.Latitude).Max();
+            var latitudeMin = _snappedPointsList.Select(i => i.Position.Latitude).Min();
+            var latitudeMax = _snappedPointsList.Select(i => i.Position.Latitude).Max();
 
-            var longitudeMin = customMap.SnappedPointsList.Select(i => i.Position.Longitude).Min();
-            var longitudeMax = customMap.SnappedPointsList.Select(i => i.Position.Longitude).Max();
+            var longitudeMin = _snappedPointsList.Select(i => i.Position.Longitude).Min();
+            var longitudeMax = _snappedPointsList.Select(i => i.Position.Longitude).Max();
 
             var avgLatitude = (latitudeMin + latitudeMax) / 2;
             var avgLongitude = (longitudeMin + longitudeMax) / 2;

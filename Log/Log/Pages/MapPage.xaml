@@ -16,15 +16,6 @@
 				<elements:CustomMap x:Name="customMap" MapType="Street" />
 			</StackLayout>
 			<StackLayout x:Name="SpeedColorBoxesLayout" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start"  VerticalOptions="End" Margin ="0,0,0,20">
-				<!--<StackLayout Orientation="Horizontal" Padding="5">
-					<BoxView Color="Red" WidthRequest="20" HeightRequest="20" />
-					<Label Text="Green" FontSize="15" />
-				</StackLayout>
-				<StackLayout Orientation="Horizontal" Padding="5,0,0,5">
-					<BoxView Color="Green" WidthRequest="20" HeightRequest="20" />
-					<Label Text="Green" FontSize="15" />
-				</StackLayout>-->
-				<!--<elements:SpeedColorBox Color="Red"/>-->
 			</StackLayout >
 		</Grid>
 	</ContentPage.Content>

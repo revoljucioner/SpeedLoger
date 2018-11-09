@@ -1,6 +1,4 @@
-﻿using System;
-using Log.Elements;
-using Log.Extensions;
+﻿using Log.Elements;
 using Xamarin.Forms;
 
 namespace Log
