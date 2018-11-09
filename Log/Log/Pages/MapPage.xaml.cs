@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Location;
 using System.Linq;
+using Log.Extensions;
 using Log.Models;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -18,7 +19,7 @@ namespace Log.Pages
             customMap.SnappedPointsList =
                 JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
 
-            var positions = customMap.SnappedPointsList.Select(i => i.Time);
+            customMap.PolylineSegmentList = customMap.SnappedPointsList.ToPolylineSegmentList();
 
             DrawSpeedColorBoxesLayout(10, 65);
             SizeChanged += MoveToRegion;
