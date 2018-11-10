@@ -31,7 +31,7 @@ namespace Log.Pages
 
             startTime.Text = startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
-            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(100));
+            locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(10));
 
             Device.StartTimer(TimeSpan.FromMilliseconds(0.5), () =>
             {
@@ -45,9 +45,10 @@ namespace Log.Pages
 
         private async void OnTimerTick()
         {
+            var time = DateTime.UtcNow;
             var position = await locator.GetPositionAsync();
 
-            FillTrackModel(position);
+            FillTrackModel(position, time);
             FillFormFields(position);
         }
 
@@ -63,14 +64,14 @@ namespace Log.Pages
             }
         }
 
-        private void FillTrackModel(Position position)
+        private void FillTrackModel(Position position, DateTime time)
         {
             if (!previousPosition.IsNull())
             {
                 var distance = previousPosition.ToGeoLocation().GetDistanceTo(position.ToGeoLocation());
                 if (distance >= minDifferenceBetweenPoints)
                 {
-                    var snappedPoint = new SnappedPoint(position, DateTime.UtcNow);
+                    var snappedPoint = new SnappedPoint(position, time);
                     snappedPointRequestList.Add(snappedPoint);
                 }
             }

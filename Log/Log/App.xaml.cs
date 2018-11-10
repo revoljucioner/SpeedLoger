@@ -28,9 +28,9 @@ namespace Log
             MainPage = new NavigationPage(new MainPage());
 
             // For testing:
-		    TestHelper.DropDataInDb();
-		    TestHelper.CreateTestTrack(TrackStorage.CommonSanFranciscoTrack);
-		    TestHelper.CreateTestTrack(TrackStorage.FromLesnayaToPushkinaTrack);
+		    //TestHelper.DropDataInDb();
+		    //TestHelper.CreateTestTrack(TrackStorage.CommonSanFranciscoTrack);
+		    //TestHelper.CreateTestTrack(TrackStorage.FromLesnayaToPushkinaTrack);
         }
 
         protected override void OnStart ()
