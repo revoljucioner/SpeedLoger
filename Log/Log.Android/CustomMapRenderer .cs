@@ -14,8 +14,6 @@ namespace Log.Droid
     public class CustomMapRenderer : MapRenderer
     {
         public List<PolylineSegment> PolylineSegmentList { get; set; }
-        //public double MinSpeed = double.MaxValue;
-        //public double MaxSpeed = 0;
 
         public CustomMapRenderer(Context context) : base(context)
         {
@@ -33,7 +31,6 @@ namespace Log.Droid
             if (e.NewElement != null)
             {
                 var formsMap = (CustomMap)e.NewElement;
-                //SnappedPointsList = formsMap.SnappedPointsList;
                 PolylineSegmentList = formsMap.PolylineSegmentList;
                 Control.GetMapAsync(this);
             }
