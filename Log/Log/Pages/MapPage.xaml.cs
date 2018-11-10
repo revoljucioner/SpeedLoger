@@ -30,13 +30,15 @@ namespace Log.Pages
 
         private void DrawSpeedColorBoxesLayout(double minSpeed, double maxSpeed)
         {
-            //var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(i => i.LeftSpeedBorder <= maxSpeed && i.RightSpeedBorder >= minSpeed);
             //speedColorIntervals.First().LeftSpeedBorder = Math.Floor(minSpeed);
             //speedColorIntervals.Last().RightSpeedBorder = Math.Ceiling(maxSpeed);
 
             //
             var speeds = customMap.PolylineSegmentList.Select(i=>i.SpeedBetweenPoints());
             var speedColorIntervals = MapColorsCollection.SpeedColorIntervalsArray.Where(sci => speeds.Any(speed=>speed<= sci.RightSpeedBorder&&speed>sci.LeftSpeedBorder));
+
+            speedColorIntervals.First().LeftSpeedBorder = Math.Floor(speeds.Min());
+            speedColorIntervals.Last().RightSpeedBorder = Math.Ceiling(speeds.Max());
             //
 
             foreach (var speedColorInterval in speedColorIntervals)
