@@ -20,7 +20,7 @@ namespace Log.Pages
 
         private List<SnappedPoint> snappedPointRequestList = new List<SnappedPoint>() { };
         // meters
-        private double minDifferenceBetweenPoints = 10;
+        private double minDifferenceBetweenPoints = 20;
         ILocator locator;
 
         public RecordPage()
