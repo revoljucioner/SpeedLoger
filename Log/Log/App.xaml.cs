@@ -9,7 +9,9 @@ namespace Log
 	public partial class App : Application
 	{
         public const string TracksUncode = "tracksUncode.db";
+	    public const string SnappedPointDatabasePath = "snappedPoints.db";
         public static TrackRepository database;
+	    public static SnappedPointRepository snappedPointDatabase;
         public static TrackRepository Database
         {
             get
@@ -21,6 +23,18 @@ namespace Log
                 return database;
             }
         }
+
+	    public static SnappedPointRepository SnappedPointDatabase
+        {
+	        get
+	        {
+	            if (snappedPointDatabase == null)
+	            {
+	                snappedPointDatabase = new SnappedPointRepository(SnappedPointDatabasePath);
+	            }
+	            return snappedPointDatabase;
+	        }
+	    }
 
         public App ()
 		{

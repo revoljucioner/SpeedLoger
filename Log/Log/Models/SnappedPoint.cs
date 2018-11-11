@@ -8,6 +8,10 @@ namespace Log.Models
         public Position Position { get; set; }
         public DateTime Time { get; set; }
 
+        public SnappedPoint()
+        {
+        }
+
         public SnappedPoint(Position position, DateTime time)
         {
             Position = position;

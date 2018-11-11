@@ -135,7 +135,7 @@ namespace Log.Pages
             }
         }
 
-        private void ButtonStart_Clicked2(object sender, EventArgs e)
+        private void ButtonStart2_Clicked(object sender, EventArgs e)
         {
             if (!RecordInProgress)
             {
