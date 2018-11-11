@@ -17,10 +17,10 @@ namespace Log.Pages
         private Track track;
 
         private Position previousPosition;
-
+        private bool RecordInProgress;
         private List<SnappedPoint> snappedPointRequestList = new List<SnappedPoint>() { };
         // meters
-        private double minDifferenceBetweenPoints = 20;
+        private double minDifferenceBetweenPoints = 10;
         ILocator locator;
 
         public RecordPage()
@@ -32,36 +32,26 @@ namespace Log.Pages
             startTime.Text = startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
             locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(10));
-
-            Device.StartTimer(TimeSpan.FromMilliseconds(0.5), () =>
-            {
-                OnTimerTick();
-                return true; // True = Repeat again, False = Stop the timer
-            });
-
-            IDevice device = DependencyService.Get<IDevice>();
-            track = new Track { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
         }
 
-        private async void OnTimerTick()
+        private async void SetPositionEveryTick()
         {
+            var currentPosition = await locator.GetPositionAsync();
             var time = DateTime.UtcNow;
-            var position = await locator.GetPositionAsync();
 
-            FillTrackModel(position, time);
-            FillFormFields(position);
+            FillTrackModel(currentPosition, time);
+            FillFormFields(currentPosition);
+            if (RecordInProgress)
+                SetPositionEveryTick();
         }
 
         private void SaveTrack()
         {
-            if (snappedPointRequestList.Count > 1)
-            {
                 string json = JsonConvert.SerializeObject(snappedPointRequestList, Formatting.Indented);
 
                 track.SnappedPointsArraySerialize = json;
                 track.EndDateTime = DateTime.UtcNow;
                 App.Database.SaveItem(track);
-            }
         }
 
         private void FillTrackModel(Position position, DateTime time)
@@ -73,9 +63,13 @@ namespace Log.Pages
                 {
                     var snappedPoint = new SnappedPoint(position, time);
                     snappedPointRequestList.Add(snappedPoint);
+                    previousPosition = position;
                 }
             }
-            previousPosition = position;
+            else
+            {
+                previousPosition = position;
+            }
         }
 
         private void FillFormFields(Position position)
@@ -89,7 +83,28 @@ namespace Log.Pages
 
         private void ButtonStop_Clicked(object sender, EventArgs e)
         {
-            SaveTrack();
+            RecordInProgress = false;
+            if (snappedPointRequestList.Count > 1)
+            {
+                SaveTrack();
+            }
+            else
+            {
+                DisplayAlert("Alert", "Recorded track is too short. Saving is cancelled.", "OK");
+            }
+        }
+
+        private void ButtonStart_Clicked(object sender, EventArgs e)
+        {
+            if (!RecordInProgress)
+            {
+                IDevice device = DependencyService.Get<IDevice>();
+                track = new Track
+                    {StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei()};
+
+                RecordInProgress = true;
+                SetPositionEveryTick();
+            }
         }
 
         #endregion
