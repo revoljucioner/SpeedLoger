@@ -45,6 +45,16 @@ namespace Log.Pages
                 SetPositionEveryTick();
         }
 
+        private async void SetPositionEveryTick2()
+        {
+            var currentSnappedPoint = await locator.GetSnappedPointAsync();
+
+            FillTrackModel2(currentSnappedPoint);
+            //FillFormFields(currentPosition);
+            if (RecordInProgress)
+                SetPositionEveryTick2();
+        }
+
         private void SaveTrack()
         {
                 string json = JsonConvert.SerializeObject(snappedPointRequestList, Formatting.Indented);
@@ -69,6 +79,24 @@ namespace Log.Pages
             else
             {
                 previousPosition = position;
+            }
+        }
+
+        private void FillTrackModel2(SnappedPoint snappedPoint)
+        {
+            var currentPosition = snappedPoint.Position;
+            if (!previousPosition.IsNull())
+            {
+                var distance = previousPosition.ToGeoLocation().GetDistanceTo(currentPosition.ToGeoLocation());
+                if (distance >= minDifferenceBetweenPoints)
+                {
+                    snappedPointRequestList.Add(snappedPoint);
+                    previousPosition = currentPosition;
+                }
+            }
+            else
+            {
+                previousPosition = currentPosition;
             }
         }
 
@@ -104,6 +132,19 @@ namespace Log.Pages
 
                 RecordInProgress = true;
                 SetPositionEveryTick();
+            }
+        }
+
+        private void ButtonStart_Clicked2(object sender, EventArgs e)
+        {
+            if (!RecordInProgress)
+            {
+                IDevice device = DependencyService.Get<IDevice>();
+                track = new Track
+                    { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
+
+                RecordInProgress = true;
+                SetPositionEveryTick2();
             }
         }
 

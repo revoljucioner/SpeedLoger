@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Log.Models;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 
@@ -25,6 +26,17 @@ namespace Log.Locators
             Plugin.Geolocator.Abstractions.Position positionGeolocator = await geolocator.GetPositionAsync(timeout: _timeout);
             var positionXamarinMaps  = new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
             return positionXamarinMaps;
+        }
+
+        public async Task<SnappedPoint> GetSnappedPointAsync()
+        {
+            geolocator = CrossGeolocator.Current;
+            geolocator.DesiredAccuracy = _desiredAccuracy;
+
+            Plugin.Geolocator.Abstractions.Position positionGeolocator = await geolocator.GetPositionAsync(timeout: _timeout);
+            var positionXamarinMaps = new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
+            var snappedPoint = new SnappedPoint ( positionXamarinMaps ,  positionGeolocator.Timestamp.UtcDateTime);
+            return snappedPoint;
         }
     }
 }
