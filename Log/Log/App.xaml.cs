@@ -39,12 +39,13 @@ namespace Log
         public App ()
 		{
 			InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new MainPage());
+		    MainPage = new NavigationPage(new MainPageCarousel());
 
             // For testing:
-		    //TestHelper.DropDataInDb();
-		    //TestHelper.CreateTestTrack(TrackStorage.CommonSanFranciscoTrack);
-		    //TestHelper.CreateTestTrack(TrackStorage.FromLesnayaToPushkinaTrack);
+            //TestHelper.DropDataInDb();
+            //TestHelper.CreateTestTrack(TrackStorage.CommonSanFranciscoTrack);
+            //TestHelper.CreateTestTrack(TrackStorage.FromLesnayaToPushkinaTrack);
         }
 
         protected override void OnStart ()
