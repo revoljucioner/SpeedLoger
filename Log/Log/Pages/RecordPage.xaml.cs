@@ -50,7 +50,7 @@ namespace Log.Pages
             var currentSnappedPoint = await locator.GetSnappedPointAsync();
 
             FillTrackModel2(currentSnappedPoint);
-            //FillFormFields(currentPosition);
+            FillFormFields(currentSnappedPoint.Position);
             if (RecordInProgress)
                 SetPositionEveryTick2();
         }
