@@ -2,7 +2,8 @@
 <CarouselPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			  xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-			  x:Class="Log.Pages.MainPage">
+			  x:Class="Log.Pages.MainPage"
+              NavigationPage.HasNavigationBar="false">
 	<ContentPage>
 		<ContentPage.Padding>
 			<OnPlatform x:TypeArguments="Thickness">
@@ -15,11 +16,12 @@
 				Animation="location.json" 
 				AutoPlay="True" 
 				Loop="True"
-				WidthRequest = "200"
-				HeightRequest = "200"
+				WidthRequest = "300"
+				HeightRequest = "300"
 				VerticalOptions="Center"
 				HorizontalOptions="Center" 
 				OnClick ="StackLayoutStartRecord_Clicked"/>
+			<Label Text="Start Record" FontSize="24"  HorizontalOptions="Center" />
 		</StackLayout>
 	</ContentPage>
 	<ContentPage>
@@ -31,11 +33,11 @@
 		<StackLayout x:Name="StackLayoutOpenRecordslistPage" >
 			<forms:AnimationView 
 				x:Name="AnimationViewUdatingMap" 
-				Animation="updating_map.json" 
+				Animation="updating_map(blue-red).json" 
 				AutoPlay="True" 
 				Loop="True"
-				WidthRequest = "200"
-				HeightRequest = "200"
+				WidthRequest = "300"
+				HeightRequest = "300"
 				VerticalOptions="Center"
 				HorizontalOptions="Center" 
 				OnClick ="StackLayoutOpenRecordslistPage_Clicked"/>
@@ -57,8 +59,8 @@
 				Animation="gears.json" 
 				AutoPlay="True" 
 				Loop="True"
-				WidthRequest = "200"
-				HeightRequest = "200"
+				WidthRequest = "300"
+				HeightRequest = "300"
 				VerticalOptions="Center"
 				HorizontalOptions="Center" 
 				OnClick ="StackLayoutStartSettings_Clicked"/>
@@ -77,11 +79,11 @@
 		<StackLayout x:Name="StackLayoutExit" >
 			<forms:AnimationView 
 				x:Name="AnimationViewExit" 
-				Animation="power.json" 
+				Animation="power(red).json" 
 				AutoPlay="True" 
 				Loop="True"
-				WidthRequest = "200"
-				HeightRequest = "200"
+				WidthRequest = "300"
+				HeightRequest = "300"
 				VerticalOptions="Center"
 				HorizontalOptions="Center" 
 				OnClick ="StackLayoutStartExit_Clicked"/>
