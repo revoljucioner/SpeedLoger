@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Log.Models;
 using Xamarin.Forms;
@@ -17,19 +18,6 @@ namespace Log.Pages
             recordsList.ItemsSource = trackList;
         }
 
-        #region activities
-
-        async void OnOpenClicked(object sender, EventArgs e)
-        {
-            var button = (Button)sender;
-            var trackListItem = (TrackListItem)((Button)sender).CommandParameter;
-            var trackId = trackListItem.Id;
-
-            //if (!App.Database.GetItem(trackId).Decoded)
-            //    DecodeTrack(trackId);
-            OpenMap(trackId);
-        }
-
         private void DecodeTrack(string trackId)
         {
         }
@@ -37,6 +25,34 @@ namespace Log.Pages
         private async void OpenMap(string trackId)
         {
             await Navigation.PushAsync(new MapPage(trackId), true);
+        }
+
+        private string GetIdFromSenderButton(object sender)
+        {
+            var trackListItem = (TrackListItem)((Button)sender).CommandParameter;
+            return trackListItem.Id;
+        }
+
+        #region activities
+
+        private void OnOpenClicked(object sender, EventArgs e)
+        {
+            var trackId = GetIdFromSenderButton(sender);
+
+            //if (!App.Database.GetItem(trackId).Decoded)
+            //    DecodeTrack(trackId);
+            OpenMap(trackId);
+        }
+
+        private async void OnDeleteClicked(object sender, EventArgs e)
+        {
+            var trackId = GetIdFromSenderButton(sender);
+            var action = await DisplayActionSheet("Are you sure that you wanna delete Track?", "Cancel", "Delete");
+            if (action == "Delete")
+            {
+                App.Database.DeleteItem(trackId);
+                App.SnappedPointDatabase.DeleteItemsByTrackId(trackId);
+            }
         }
 
         #endregion

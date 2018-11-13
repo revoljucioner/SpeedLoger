@@ -57,6 +57,21 @@ namespace Log.DB
             return database.Delete<SnappedPointDb>(id);
         }
 
+        public void DeleteItemsByTrackId(string trackId)
+        {
+            //var snappedPointsToDelete = GetItems().Where(i => i.TrackId == trackId);
+            //var snappedPointsToDeleteIds = snappedPointsToDelete.Select(i => i.Id);
+            //foreach (var snappedPointId in snappedPointsToDeleteIds)
+            //{
+            //    database.Delete<SnappedPointDb>(snappedPointId);
+            //}
+            var snappedPointsToDelete = GetItems().Where(i => i.TrackId == trackId);
+            foreach (var snappedPoint in snappedPointsToDelete)
+            {
+                database.Delete<SnappedPointDb>(snappedPoint.Id);
+            }
+        }
+
         public int SaveItem(SnappedPointDb item)
         {
             if (item.Id != 0)

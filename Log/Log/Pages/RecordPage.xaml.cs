@@ -58,7 +58,7 @@ namespace Log.Pages
                 var distance = previousPosition.ToGeoLocation().GetDistanceTo(currentPosition.ToGeoLocation());
                 if (distance >= minDifferenceBetweenPoints)
                 {
-                    var snappedPointDb = (SnappedPointDb)snappedPoint;
+                    var snappedPointDb = new SnappedPointDb(snappedPoint);
                     snappedPointDb.TrackId = trackId;
                     App.SnappedPointDatabase.SaveItem(snappedPointDb);
                     previousPosition = currentPosition;

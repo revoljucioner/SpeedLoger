@@ -21,7 +21,7 @@ namespace Log.Pages
             var snappedPointsDb = App.SnappedPointDatabase.GetItemsByTrackId(trackId);
             if (snappedPointsDb.Length<2)
                 throw new NotImplementedException();
-            _snappedPointsList = snappedPointsDb.Select(i=>(SnappedPoint)i).ToList();
+            _snappedPointsList = snappedPointsDb.Select(i=>i.ToSnappedPoint()).ToList();
 
             customMap.PolylineSegmentList = _snappedPointsList.ToPolylineSegmentList();
 
