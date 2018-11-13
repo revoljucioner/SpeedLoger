@@ -38,7 +38,7 @@ namespace Log.DB
             return item;
         }
 
-        public SnappedPointDb[] GetItemsByTrackId(int trackId)
+        public SnappedPointDb[] GetItemsByTrackId(string trackId)
         {
             SnappedPointDb[] items;
             try

@@ -6,7 +6,7 @@ namespace Log.Helpers
 {
     public static class TestHelper
     {
-        public static List<int> TestTrackIdList = new List<int>();
+        public static List<string> TestTrackIdList = new List<string>();
         public static void CreateTestTrack(Track track)
         {
             TestTrackIdList.Add(App.Database.SaveItem(track));
@@ -14,7 +14,7 @@ namespace Log.Helpers
 
         public static void DropDataInDb()
         {
-            TestTrackIdList = new List<int>();
+            TestTrackIdList = new List<string>();
             var currentTracksIds = App.Database.GetItems().Select(i => i.Id);
             foreach (var trackId in currentTracksIds)
             {

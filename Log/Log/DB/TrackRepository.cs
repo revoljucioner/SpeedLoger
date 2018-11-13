@@ -24,7 +24,7 @@ namespace Log.DB
 
         }
 
-        public Track GetItem(int id)
+        public Track GetItem(string id)
         {
             Track item;
             try
@@ -38,21 +38,23 @@ namespace Log.DB
             return item;
         }
 
-        public int DeleteItem(int id)
+        public int DeleteItem(string id)
         {
             return database.Delete<Track>(id);
         }
 
-        public int SaveItem(Track item)
+        public string SaveItem(Track item)
         {
-            if (item.Id != 0)
+            if (item.Id != "")
             {
                 database.Update(item);
                 return item.Id;
             }
             else
             {
-                return database.Insert(item);
+                item.Id = new Guid().ToString();
+                database.Insert(item);
+                return item.Id;
             }
         }
     }

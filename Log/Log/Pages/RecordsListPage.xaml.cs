@@ -17,29 +17,7 @@ namespace Log.Pages
             recordsList.ItemsSource = trackList;
         }
 
-        //public string[] records { get; set; }
-
-        //public RecordsListPage()
-        //{
-        //    InitializeComponent();
-        //        var tracks = App.Database.GetItems().Select(i => i.ToTrackListItem()).ToArray();
-        //        recordsList.ItemsSource = tracks;
-        //}
-
         #region activities
-
-        //public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
-        //{
-        //    if (e.SelectedItem == null) return; // has been set to null, do not 'process' tapped event
-        //    //DisplayAlert("Tapped", ((TrackListItem)e.SelectedItem).Id + " row was tapped", "OK");
-        //    ((ListView)sender).SelectedItem = null; // de-select the row
-        //    //DisplayAlert("Tapped", ((TrackListItem)e.SelectedItem).Id + " row was tapped", "OK");
-        //    var trackId = ((TrackListItem)e.SelectedItem).Id;
-        //    //var track = App.Database.GetItem(trackId);
-        //    if (!App.Database.GetItem(trackId).Decoded)
-        //        DecodeTrack(trackId);
-        //    OpenMap(trackId);
-        //}
 
         async void OnOpenClicked(object sender, EventArgs e)
         {
@@ -47,18 +25,18 @@ namespace Log.Pages
             var trackListItem = (TrackListItem)((Button)sender).CommandParameter;
             var trackId = trackListItem.Id;
 
-            if (!App.Database.GetItem(trackId).Decoded)
-                DecodeTrack(trackId);
+            //if (!App.Database.GetItem(trackId).Decoded)
+            //    DecodeTrack(trackId);
             OpenMap(trackId);
         }
 
-        private void DecodeTrack(int trackId)
+        private void DecodeTrack(string trackId)
         {
         }
 
-        private async void OpenMap(int trackId)
+        private async void OpenMap(string trackId)
         {
-            await Navigation.PushAsync(new MapPage(App.Database.GetItem(trackId)), true);
+            await Navigation.PushAsync(new MapPage(trackId), true);
         }
 
         #endregion

@@ -7,7 +7,7 @@ namespace Log.Models
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
-        public int TrackId { get; set; }
+        public string TrackId { get; set; }
 
     }
 }

@@ -5,7 +5,6 @@ using Log.DependenciesOS;
 using Log.Extensions;
 using Log.Locators;
 using Log.Models;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
@@ -20,9 +19,8 @@ namespace Log.Pages
         private bool RecordInProgress;
         private List<SnappedPoint> snappedPointRequestList = new List<SnappedPoint>() { };
         // meters
-        private double minDifferenceBetweenPoints = 10;
-
-        private int trackId;
+        private double minDifferenceBetweenPoints = 5;
+        private string trackId;
         ILocator locator;
 
         public RecordPage()
@@ -40,8 +38,7 @@ namespace Log.Pages
         {
             var currentSnappedPoint = await locator.GetSnappedPointAsync();
 
-            FillTrackModel(currentSnappedPoint);
-            //SaveSnappedPointToDb(currentSnappedPoint);
+            SaveSnappedPointToDb(currentSnappedPoint);
             FillFormFields(currentSnappedPoint.Position);
             if (RecordInProgress)
                 SetPositionEveryTick();
@@ -49,29 +46,8 @@ namespace Log.Pages
 
         private void SaveTrack()
         {
-                string json = JsonConvert.SerializeObject(snappedPointRequestList, Formatting.Indented);
-
-                track.SnappedPointsArraySerialize = json;
                 track.EndDateTime = DateTime.UtcNow;
                 App.Database.SaveItem(track);
-        }
-
-        private void FillTrackModel(SnappedPoint snappedPoint)
-        {
-            var currentPosition = snappedPoint.Position;
-            if (!previousPosition.IsNull())
-            {
-                var distance = previousPosition.ToGeoLocation().GetDistanceTo(currentPosition.ToGeoLocation());
-                if (distance >= minDifferenceBetweenPoints)
-                {
-                    snappedPointRequestList.Add(snappedPoint);
-                    previousPosition = currentPosition;
-                }
-            }
-            else
-            {
-                previousPosition = currentPosition;
-            }
         }
 
         private void SaveSnappedPointToDb(SnappedPoint snappedPoint)
@@ -121,8 +97,9 @@ namespace Log.Pages
             if (!RecordInProgress)
             {
                 IDevice device = DependencyService.Get<IDevice>();
+                trackId = new Guid().ToString();
                 track = new Track
-                    { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
+                    { Id = trackId, StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
 
                 RecordInProgress = true;
                 SetPositionEveryTick();

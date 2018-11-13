@@ -4,7 +4,6 @@ using System.Device.Location;
 using System.Linq;
 using Log.Extensions;
 using Log.Models;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
@@ -15,12 +14,14 @@ namespace Log.Pages
         private double borderCoeficient = 0.8;
         private List<SnappedPoint> _snappedPointsList;
 
-        public MapPage(Track track)
+        public MapPage(string trackId)
         {
             InitializeComponent();
 
-            _snappedPointsList =
-                JsonConvert.DeserializeObject<SnappedPoint[]>(track.SnappedPointsArraySerialize).ToList();
+            var snappedPointsDb = App.SnappedPointDatabase.GetItemsByTrackId(trackId);
+            if (snappedPointsDb.Length<2)
+                throw new NotImplementedException();
+            _snappedPointsList = snappedPointsDb.Select(i=>(SnappedPoint)i).ToList();
 
             customMap.PolylineSegmentList = _snappedPointsList.ToPolylineSegmentList();
 
