@@ -14,7 +14,7 @@
 							<StackLayout>
 								<Label Text="{Binding Id}" FontSize="Small" />
 								<Label Text="{Binding StartDateTime}" FontSize="Small" />
-								<!--<Button Text="Open" BackgroundColor="Gray" HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="OnOpenClicked" />-->
+								<Button Text="Open" BackgroundColor="Gray" HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="OnOpenClicked" />
 							</StackLayout>
 						</ViewCell.View>
 					</ViewCell>

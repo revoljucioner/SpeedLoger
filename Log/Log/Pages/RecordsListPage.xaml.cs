@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Log.Models;
 using Xamarin.Forms;
@@ -40,12 +41,12 @@ namespace Log.Pages
             OpenMap(trackId);
         }
 
-        //async void OnOpenClicked(object sender, EventArgs e)
-        //{
-        //    var b = (Button)sender;
-        //    var yyy = (Track)((Button) sender).CommandParameter;
-        //    await DisplayAlert("", $"{yyy.SnappedPointsArraySerialize.ToString()}", "OK");
-        //}
+        async void OnOpenClicked(object sender, EventArgs e)
+        {
+            var b = (Button)sender;
+            var yyy = (TrackListItem)((Button)sender).CommandParameter;
+            //await DisplayAlert("", $"{yyy.SnappedPointsArraySerialize.ToString()}", "OK");
+        }
 
         private void DecodeTrack(int trackId)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -21,6 +22,10 @@ namespace Log.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             AnimationViewRenderer.Init();
+
+            var cv = typeof(Xamarin.Forms.CarouselView);
+            var assembly = Assembly.Load(cv.FullName);
+
             LoadApplication(new App());
 
             //TextView button = FindViewById<TextView>(Resource.Id.LocationText);
