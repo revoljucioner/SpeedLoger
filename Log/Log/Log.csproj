@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\MainPageCarousel2.xaml.cs">
+      <DependentUpon>MainPageCarousel2.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\MainPageCarousel.xaml.cs">
       <DependentUpon>MainPageCarousel.xaml</DependentUpon>
     </Compile>

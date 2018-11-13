@@ -39,8 +39,8 @@ namespace Log
         public App ()
 		{
 			InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
-            //MainPage = new NavigationPage(new MainPageCarousel());
+            //MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPageCarousel2());
 
             // For testing:
             //TestHelper.DropDataInDb();
