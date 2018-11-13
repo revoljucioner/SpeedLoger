@@ -28,24 +28,28 @@ namespace Log.Pages
 
         #region activities
 
-        public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem == null) return; // has been set to null, do not 'process' tapped event
-            //DisplayAlert("Tapped", ((TrackListItem)e.SelectedItem).Id + " row was tapped", "OK");
-            ((ListView)sender).SelectedItem = null; // de-select the row
-            //DisplayAlert("Tapped", ((TrackListItem)e.SelectedItem).Id + " row was tapped", "OK");
-            var trackId = ((TrackListItem)e.SelectedItem).Id;
-            //var track = App.Database.GetItem(trackId);
-            if (!App.Database.GetItem(trackId).Decoded)
-                DecodeTrack(trackId);
-            OpenMap(trackId);
-        }
+        //public void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        //{
+        //    if (e.SelectedItem == null) return; // has been set to null, do not 'process' tapped event
+        //    //DisplayAlert("Tapped", ((TrackListItem)e.SelectedItem).Id + " row was tapped", "OK");
+        //    ((ListView)sender).SelectedItem = null; // de-select the row
+        //    //DisplayAlert("Tapped", ((TrackListItem)e.SelectedItem).Id + " row was tapped", "OK");
+        //    var trackId = ((TrackListItem)e.SelectedItem).Id;
+        //    //var track = App.Database.GetItem(trackId);
+        //    if (!App.Database.GetItem(trackId).Decoded)
+        //        DecodeTrack(trackId);
+        //    OpenMap(trackId);
+        //}
 
         async void OnOpenClicked(object sender, EventArgs e)
         {
-            var b = (Button)sender;
-            var yyy = (TrackListItem)((Button)sender).CommandParameter;
-            //await DisplayAlert("", $"{yyy.SnappedPointsArraySerialize.ToString()}", "OK");
+            var button = (Button)sender;
+            var trackListItem = (TrackListItem)((Button)sender).CommandParameter;
+            var trackId = trackListItem.Id;
+
+            if (!App.Database.GetItem(trackId).Decoded)
+                DecodeTrack(trackId);
+            OpenMap(trackId);
         }
 
         private void DecodeTrack(int trackId)

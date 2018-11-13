@@ -5,16 +5,15 @@
 	<StackLayout>
 		<ListView x:Name="recordsList" ItemsSource="{Binding}" 
 		          SelectedItem="{Binding SelectedTrack, Mode=TwoWay}" 
-		          HasUnevenRows="True"
-		          ItemSelected="OnItemSelected">
+		          HasUnevenRows="True">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
 						<ViewCell.View>
-							<StackLayout>
-								<Label Text="{Binding Id}" FontSize="Small" />
-								<Label Text="{Binding StartDateTime}" FontSize="Small" />
-								<Button Text="Open" BackgroundColor="Gray" HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="OnOpenClicked" />
+							<StackLayout Orientation="Horizontal">
+								<Label Text="{Binding Id}" FontSize="Small"  HorizontalOptions="Start"/>
+								<Label Text="{Binding StartDateTime}" FontSize="Small"  HorizontalOptions="FillAndExpand"/>
+								<Button Text="Open" BackgroundColor="Gray" CommandParameter="{Binding .}"  HorizontalOptions="End" Clicked="OnOpenClicked" />
 							</StackLayout>
 						</ViewCell.View>
 					</ViewCell>
