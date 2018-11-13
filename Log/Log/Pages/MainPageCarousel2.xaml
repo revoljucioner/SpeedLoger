@@ -9,17 +9,17 @@
 				<On Platform="iOS, Android" Value="0,40,0,0" />
 			</OnPlatform>
 		</ContentPage.Padding>
-		<StackLayout x:Name="stackLayout" >
+		<StackLayout x:Name="StackLayoutStartRecord" >
 			<forms:AnimationView 
-				x:Name="AnimationView" 
-				Animation="motorcycle.json" 
+				x:Name="AnimationViewLocation" 
+				Animation="location.json" 
 				AutoPlay="True" 
 				Loop="True"
 				WidthRequest = "200"
 				HeightRequest = "200"
 				VerticalOptions="Center"
 				HorizontalOptions="Center" 
-				OnClick ="ButtonLottie_Clicked"/>
+				OnClick ="StackLayoutStartRecord_Clicked"/>
 		</StackLayout>
 	</ContentPage>
 	<ContentPage>
@@ -28,9 +28,17 @@
 				<On Platform="iOS, Android" Value="0,40,0,0" />
 			</OnPlatform>
 		</ContentPage.Padding>
-		<StackLayout>
-			<Label Text="Green" FontSize="Medium" HorizontalOptions="Center" />
-			<BoxView Color="Green" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+		<StackLayout x:Name="StackLayoutOpenRecordslistPage" >
+			<forms:AnimationView 
+				x:Name="AnimationViewUdatingMap" 
+				Animation="updating_map.json" 
+				AutoPlay="True" 
+				Loop="True"
+				WidthRequest = "200"
+				HeightRequest = "200"
+				VerticalOptions="Center"
+				HorizontalOptions="Center" 
+				OnClick ="StackLayoutOpenRecordslistPage_Clicked"/>
 		</StackLayout>
 	</ContentPage>
 	<ContentPage>
@@ -39,9 +47,44 @@
 				<On Platform="iOS, Android" Value="0,40,0,0" />
 			</OnPlatform>
 		</ContentPage.Padding>
-		<StackLayout>
+		<!--<StackLayout>
 			<Label Text="Blue" FontSize="Medium" HorizontalOptions="Center" />
 			<BoxView Color="Blue" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+		</StackLayout>-->
+		<StackLayout x:Name="StackLayoutSettings" >
+			<forms:AnimationView 
+				x:Name="AnimationView" 
+				Animation="gears.json" 
+				AutoPlay="True" 
+				Loop="True"
+				WidthRequest = "200"
+				HeightRequest = "200"
+				VerticalOptions="Center"
+				HorizontalOptions="Center" 
+				OnClick ="StackLayoutStartSettings_Clicked"/>
+		</StackLayout>
+	</ContentPage>
+	<ContentPage>
+		<ContentPage.Padding>
+			<OnPlatform x:TypeArguments="Thickness">
+				<On Platform="iOS, Android" Value="0,40,0,0" />
+			</OnPlatform>
+		</ContentPage.Padding>
+		<!--<StackLayout>
+			<Label Text="Blue" FontSize="Medium" HorizontalOptions="Center" />
+			<BoxView Color="Blue" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+		</StackLayout>-->
+		<StackLayout x:Name="StackLayoutExit" >
+			<forms:AnimationView 
+				x:Name="AnimationViewExit" 
+				Animation="power.json" 
+				AutoPlay="True" 
+				Loop="True"
+				WidthRequest = "200"
+				HeightRequest = "200"
+				VerticalOptions="Center"
+				HorizontalOptions="Center" 
+				OnClick ="StackLayoutStartExit_Clicked"/>
 		</StackLayout>
 	</ContentPage>
 </CarouselPage>

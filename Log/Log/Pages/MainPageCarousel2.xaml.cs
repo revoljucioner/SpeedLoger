@@ -12,11 +12,26 @@ namespace Log.Pages
 
 	    #region activities
 
-	    private async void ButtonLottie_Clicked(object sender, EventArgs e)
+	    private async void StackLayoutStartRecord_Clicked(object sender, EventArgs e)
 	    {
-	        //await Navigation.PushAsync(new RecordsListPage(), true);
+            await Navigation.PushAsync(new RecordPage(), true);
+        }
+
+	    private async void StackLayoutOpenRecordslistPage_Clicked(object sender, EventArgs e)
+	    {
+	        await Navigation.PushAsync(new RecordsListPage(), true);
 	    }
 
-	    #endregion
+	    private async void StackLayoutStartSettings_Clicked(object sender, EventArgs e)
+	    {
+            // TODO:
+        }
+
+	    private async void StackLayoutStartExit_Clicked(object sender, EventArgs e)
+	    {
+	        // TODO:
+	    }
+
+        #endregion
     }
 }

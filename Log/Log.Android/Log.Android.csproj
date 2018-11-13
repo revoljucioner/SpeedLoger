@@ -96,6 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\motorcycle.json" />
+    <AndroidAsset Include="Assets\location.json" />
+    <AndroidAsset Include="Assets\gears.json" />
+    <AndroidAsset Include="Assets\updating_map.json" />
+    <AndroidAsset Include="Assets\power.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
