@@ -23,13 +23,4 @@
       <HintPath>..\..\..\..\..\Downloads\System.Device\System.Device.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Pages\MainPageCarousel2.xaml.cs">
-      <DependentUpon>MainPageCarousel2.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\MainPageCarousel.xaml.cs">
-      <DependentUpon>MainPageCarousel.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>
