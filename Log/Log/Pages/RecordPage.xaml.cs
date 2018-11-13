@@ -36,23 +36,12 @@ namespace Log.Pages
 
         private async void SetPositionEveryTick()
         {
-            var currentPosition = await locator.GetPositionAsync();
-            var time = DateTime.UtcNow;
-
-            FillTrackModel(currentPosition, time);
-            FillFormFields(currentPosition);
-            if (RecordInProgress)
-                SetPositionEveryTick();
-        }
-
-        private async void SetPositionEveryTick2()
-        {
             var currentSnappedPoint = await locator.GetSnappedPointAsync();
 
-            FillTrackModel2(currentSnappedPoint);
+            FillTrackModel(currentSnappedPoint);
             FillFormFields(currentSnappedPoint.Position);
             if (RecordInProgress)
-                SetPositionEveryTick2();
+                SetPositionEveryTick();
         }
 
         private void SaveTrack()
@@ -64,25 +53,7 @@ namespace Log.Pages
                 App.Database.SaveItem(track);
         }
 
-        private void FillTrackModel(Position position, DateTime time)
-        {
-            if (!previousPosition.IsNull())
-            {
-                var distance = previousPosition.ToGeoLocation().GetDistanceTo(position.ToGeoLocation());
-                if (distance >= minDifferenceBetweenPoints)
-                {
-                    var snappedPoint = new SnappedPoint(position, time);
-                    snappedPointRequestList.Add(snappedPoint);
-                    previousPosition = position;
-                }
-            }
-            else
-            {
-                previousPosition = position;
-            }
-        }
-
-        private void FillTrackModel2(SnappedPoint snappedPoint)
+        private void FillTrackModel(SnappedPoint snappedPoint)
         {
             var currentPosition = snappedPoint.Position;
             if (!previousPosition.IsNull())
@@ -128,23 +99,10 @@ namespace Log.Pages
             {
                 IDevice device = DependencyService.Get<IDevice>();
                 track = new Track
-                    {StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei()};
-
-                RecordInProgress = true;
-                SetPositionEveryTick();
-            }
-        }
-
-        private void ButtonStart2_Clicked(object sender, EventArgs e)
-        {
-            if (!RecordInProgress)
-            {
-                IDevice device = DependencyService.Get<IDevice>();
-                track = new Track
                     { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
 
                 RecordInProgress = true;
-                SetPositionEveryTick2();
+                SetPositionEveryTick();
             }
         }
 

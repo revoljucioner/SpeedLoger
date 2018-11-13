@@ -19,7 +19,6 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<Label x:Name="startTimeText" Text="Start time:" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
 		<Label x:Name="startTime" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
@@ -35,9 +34,8 @@
 		<Label x:Name="latitudeText" Text="Latitude" Grid.Column="1" Grid.Row="6" BackgroundColor="Gray"/>
 		<Label x:Name="latitude" Text="Not implement" Grid.Column="1" Grid.Row="7" BackgroundColor="Gray"/>
 
-		<Button x:Name="buttonStart" Text="start_pos" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Clicked="ButtonStart_Clicked" />
-		<Button x:Name="buttonStart2" Text="start_snap" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Clicked="ButtonStart2_Clicked" />
-		<Button x:Name="buttonStop" Text="stop" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
+		<Button x:Name="buttonStart" Text="start" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Clicked="ButtonStart_Clicked" />
+		<Button x:Name="buttonStop" Text="stop" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
 
 	</Grid>
 
