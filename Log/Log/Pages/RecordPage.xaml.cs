@@ -21,6 +21,8 @@ namespace Log.Pages
         private List<SnappedPoint> snappedPointRequestList = new List<SnappedPoint>() { };
         // meters
         private double minDifferenceBetweenPoints = 10;
+
+        private int trackId;
         ILocator locator;
 
         public RecordPage()
@@ -39,6 +41,7 @@ namespace Log.Pages
             var currentSnappedPoint = await locator.GetSnappedPointAsync();
 
             FillTrackModel(currentSnappedPoint);
+            //SaveSnappedPointToDb(currentSnappedPoint);
             FillFormFields(currentSnappedPoint.Position);
             if (RecordInProgress)
                 SetPositionEveryTick();
@@ -62,6 +65,26 @@ namespace Log.Pages
                 if (distance >= minDifferenceBetweenPoints)
                 {
                     snappedPointRequestList.Add(snappedPoint);
+                    previousPosition = currentPosition;
+                }
+            }
+            else
+            {
+                previousPosition = currentPosition;
+            }
+        }
+
+        private void SaveSnappedPointToDb(SnappedPoint snappedPoint)
+        {
+            var currentPosition = snappedPoint.Position;
+            if (!previousPosition.IsNull())
+            {
+                var distance = previousPosition.ToGeoLocation().GetDistanceTo(currentPosition.ToGeoLocation());
+                if (distance >= minDifferenceBetweenPoints)
+                {
+                    var snappedPointDb = (SnappedPointDb)snappedPoint;
+                    snappedPointDb.TrackId = trackId;
+                    App.SnappedPointDatabase.SaveItem(snappedPointDb);
                     previousPosition = currentPosition;
                 }
             }
