@@ -35,13 +35,14 @@ namespace Log.Pages
             locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(10));
             //locator.SetPositionChangedEvent(CrossGeolocator_Current_PositionChanged);
             ((LocatorPluginGeolocator)locator).StartListening();
+            locator.SetPositionChangedEvent(CrossGeolocator_Current_PositionChanged);
             StartRecording();
         }
 
         private void StartRecording()
         {
             IDevice device = DependencyService.Get<IDevice>();
-            trackId = new Guid().ToString();
+            trackId = Guid.NewGuid().ToString();
             track = new Track
                 { Id = trackId, StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
 

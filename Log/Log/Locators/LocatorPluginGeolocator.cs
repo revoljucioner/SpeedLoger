@@ -76,7 +76,7 @@ namespace Log.Locators
 
             await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(5), 10, true);
 
-            CrossGeolocator.Current.PositionChanged += PositionChanged;
+            //CrossGeolocator.Current.PositionChanged += PositionChanged;
         }
 
         private void PositionChanged(object sender, PositionEventArgs e)

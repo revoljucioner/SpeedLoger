@@ -45,17 +45,19 @@ namespace Log.DB
 
         public string SaveItem(Track item)
         {
-            if (item.Id != "")
-            {
-                database.Update(item);
-                return item.Id;
-            }
-            else
-            {
-                item.Id = new Guid().ToString();
-                database.Insert(item);
-                return item.Id;
-            }
+            //if (item.Id != "")
+            //{
+            //    database.Update(item);
+            //    return item.Id;
+            //}
+            //else
+            //{
+            //    item.Id = new Guid().ToString();
+            //    database.Insert(item);
+            //    return item.Id;
+            //}
+            database.Insert(item);
+            return item.Id;
         }
     }
 }
