@@ -34,8 +34,8 @@ namespace Log.Pages
 
             locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(10));
             //locator.SetPositionChangedEvent(CrossGeolocator_Current_PositionChanged);
-            ((LocatorPluginGeolocator)locator).StartListening();
-            locator.SetPositionChangedEvent(CrossGeolocator_Current_PositionChanged);
+            ((LocatorPluginGeolocator)locator).StartListening(CrossGeolocator_Current_PositionChanged);
+            //locator.SetPositionChangedEvent(CrossGeolocator_Current_PositionChanged);
             StartRecording();
         }
 
@@ -130,18 +130,8 @@ namespace Log.Pages
             Device.BeginInvokeOnMainThread(() =>
             {
                 var positionGeolocator = e.Position;
-                //var positionXamarinFormsMapsPosition =
-                //    new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
                 var snappedPointDb =
-                    new SnappedPointDb { TrackId = track.Id,
-                        Latitude = positionGeolocator .Latitude, Longitude =  positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
-
-                //Positions.Add(position);
-                //count++;
-                //LabelCount.Text = $"{count} updates";
-                //labelGPSTrack.Text = string.Format("Time: {0} \nLat: {1} \nLong: {2} \nAltitude: {3} \nAltitude Accuracy: {4} \nAccuracy: {5} \nHeading: {6} \nSpeed: {7}",
-                //    position.Timestamp, position.Latitude, position.Longitude,
-                //    position.Altitude, position.AltitudeAccuracy, position.Accuracy, position.Heading, position.Speed);
+                    new SnappedPointDb { TrackId = 1113, Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
                 App.SnappedPointDatabase.SaveItem(snappedPointDb);
 
             });

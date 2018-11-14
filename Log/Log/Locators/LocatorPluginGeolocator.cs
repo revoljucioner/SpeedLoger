@@ -55,13 +55,13 @@ namespace Log.Locators
             {
                 var positionGeolocator = e.Position;
                 var snappedPointDb =
-                    new SnappedPointDb { TrackId = 1111, Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
+                    new SnappedPointDb { TrackId = 1112, Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
                 App.SnappedPointDatabase.SaveItem(snappedPointDb);
 
             });
         }
 
-        public async Task StartListening()
+        public async Task StartListening(EventHandler<PositionEventArgs> eventMethod)
         {
             if (CrossGeolocator.Current.IsListening)
                 return;
@@ -77,7 +77,7 @@ namespace Log.Locators
                 PauseLocationUpdatesAutomatically = false
             });
 
-            CrossGeolocator.Current.PositionChanged += CrossGeolocator_Current_PositionChanged;
+            CrossGeolocator.Current.PositionChanged += eventMethod;
         }
     }
 }
