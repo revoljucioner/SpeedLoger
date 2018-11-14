@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Log.Models;
-using Xamarin.Forms.Maps;
+using Plugin.Geolocator.Abstractions;
+using Position = Xamarin.Forms.Maps.Position;
 
 namespace Log.Locators
 {
@@ -10,5 +12,6 @@ namespace Log.Locators
 
         Task<SnappedPoint> GetSnappedPointAsync();
 
+        void SetPositionChangedEvent(EventHandler<PositionEventArgs> eventMethod);
     }
 }

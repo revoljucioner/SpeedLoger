@@ -5,8 +5,9 @@ using Log.DependenciesOS;
 using Log.Extensions;
 using Log.Locators;
 using Log.Models;
+using Plugin.Geolocator.Abstractions;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
+using Position = Xamarin.Forms.Maps.Position;
 
 namespace Log.Pages
 {
@@ -17,7 +18,7 @@ namespace Log.Pages
 
         private Position previousPosition;
         private bool RecordInProgress;
-        private List<SnappedPoint> snappedPointRequestList = new List<SnappedPoint>() { };
+        private int _snappedPointsCount = 0;
         // meters
         private double minDifferenceBetweenPoints = 5;
         private string trackId;
@@ -32,22 +33,52 @@ namespace Log.Pages
             startTime.Text = startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
             locator = new LocatorPluginGeolocator(desiredAccuracy: 1, timeout: TimeSpan.FromMilliseconds(10));
+            //locator.SetPositionChangedEvent(CrossGeolocator_Current_PositionChanged);
+            ((LocatorPluginGeolocator)locator).StartListening();
+            StartRecording();
         }
 
-        private async void SetPositionEveryTick()
+        private void StartRecording()
         {
-            var currentSnappedPoint = await locator.GetSnappedPointAsync();
+            IDevice device = DependencyService.Get<IDevice>();
+            trackId = new Guid().ToString();
+            track = new Track
+                { Id = trackId, StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
 
-            SaveSnappedPointToDb(currentSnappedPoint);
-            FillFormFields(currentSnappedPoint.Position);
-            if (RecordInProgress)
-                SetPositionEveryTick();
+            RecordInProgress = true;
+        }
+
+        //private async void SetPositionEveryTick()
+        //{
+        //    var currentSnappedPoint = await locator.GetSnappedPointAsync();
+
+        //    SaveSnappedPointToDb(currentSnappedPoint);
+        //    _snappedPointsCount += 1;
+        //    FillFormFields(currentSnappedPoint.Position);
+        //    if (RecordInProgress)
+        //        SetPositionEveryTick();
+        //}
+
+        private async void SetPosition()
+        {
+            while (RecordInProgress)
+            {
+                var currentSnappedPoint = await locator.GetSnappedPointAsync().ConfigureAwait(false);
+                SaveSnappedPointToDb(currentSnappedPoint);
+                _snappedPointsCount += 1;
+                //FillFormFields(currentSnappedPoint.Position);
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            SetPosition();
         }
 
         private void SaveTrack()
         {
-                track.EndDateTime = DateTime.UtcNow;
-                App.Database.SaveItem(track);
+            track.EndDateTime = DateTime.UtcNow;
+            App.Database.SaveItem(track);
         }
 
         private void SaveSnappedPointToDb(SnappedPoint snappedPoint)
@@ -82,7 +113,7 @@ namespace Log.Pages
         private void ButtonStop_Clicked(object sender, EventArgs e)
         {
             RecordInProgress = false;
-            if (snappedPointRequestList.Count > 1)
+            if (_snappedPointsCount > 1)
             {
                 SaveTrack();
             }
@@ -92,18 +123,26 @@ namespace Log.Pages
             }
         }
 
-        private void ButtonStart_Clicked(object sender, EventArgs e)
+        public void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)
         {
-            if (!RecordInProgress)
-            {
-                IDevice device = DependencyService.Get<IDevice>();
-                trackId = new Guid().ToString();
-                track = new Track
-                    { Id = trackId, StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
 
-                RecordInProgress = true;
-                SetPositionEveryTick();
-            }
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                var positionGeolocator = e.Position;
+                //var positionXamarinFormsMapsPosition =
+                //    new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
+                var snappedPointDb =
+                    new SnappedPointDb{Latitude = positionGeolocator .Latitude, Longitude =  positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
+
+                //Positions.Add(position);
+                //count++;
+                //LabelCount.Text = $"{count} updates";
+                //labelGPSTrack.Text = string.Format("Time: {0} \nLat: {1} \nLong: {2} \nAltitude: {3} \nAltitude Accuracy: {4} \nAccuracy: {5} \nHeading: {6} \nSpeed: {7}",
+                //    position.Timestamp, position.Latitude, position.Longitude,
+                //    position.Altitude, position.AltitudeAccuracy, position.Accuracy, position.Heading, position.Speed);
+                App.SnappedPointDatabase.SaveItem(snappedPointDb);
+
+            });
         }
 
         #endregion
