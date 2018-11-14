@@ -14,7 +14,7 @@ namespace Log.Pages
         private Track _track;
         private int _snappedPointsCount = 0;
         // meters
-        ILocator locator;
+        readonly ILocator _locator;
 
         public RecordPage()
         {
@@ -24,17 +24,17 @@ namespace Log.Pages
 
             startTime.Text = _startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
-            locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
-            locator.StartListening(CrossGeolocator_Current_PositionChanged);
-            SaveTrackToDb();
+            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
+            _locator.StartListening(CrossGeolocator_Current_PositionChanged);
+            _track.Id =SaveTrackToDb();
         }
 
-        private void SaveTrackToDb()
+        private int SaveTrackToDb()
         {
             IDevice device = DependencyService.Get<IDevice>();
             _track = new Track
             { StartDateTime = _startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
-            _track.Id = App.Database.SaveItem(_track);
+            return App.Database.SaveItem(_track);
         }
 
         public void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)
