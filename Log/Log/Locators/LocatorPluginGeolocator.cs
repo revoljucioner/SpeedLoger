@@ -45,6 +45,7 @@ namespace Log.Locators
         public void  SetPositionChangedEvent(EventHandler<PositionEventArgs> eventMethod)
         {
             //geolocator.PositionChanged += CrossGeolocator_Current_PositionChanged;
+            //geolocator.PositionChanged += CrossGeolocator_Current_PositionChanged;
         }
 
         public void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)
@@ -53,17 +54,8 @@ namespace Log.Locators
             Device.BeginInvokeOnMainThread(() =>
             {
                 var positionGeolocator = e.Position;
-                //var positionXamarinFormsMapsPosition =
-                //    new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
                 var snappedPointDb =
-                    new SnappedPointDb { Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
-
-                //Positions.Add(position);
-                //count++;
-                //LabelCount.Text = $"{count} updates";
-                //labelGPSTrack.Text = string.Format("Time: {0} \nLat: {1} \nLong: {2} \nAltitude: {3} \nAltitude Accuracy: {4} \nAccuracy: {5} \nHeading: {6} \nSpeed: {7}",
-                //    position.Timestamp, position.Latitude, position.Longitude,
-                //    position.Altitude, position.AltitudeAccuracy, position.Accuracy, position.Heading, position.Speed);
+                    new SnappedPointDb { TrackId = 1111, Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
                 App.SnappedPointDatabase.SaveItem(snappedPointDb);
 
             });
@@ -74,24 +66,18 @@ namespace Log.Locators
             if (CrossGeolocator.Current.IsListening)
                 return;
 
-            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(5), 10, true);
+            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(5), 10, true, new Plugin.Geolocator.Abstractions.ListenerSettings
+            {
+                ActivityType = Plugin.Geolocator.Abstractions.ActivityType.AutomotiveNavigation,
+                AllowBackgroundUpdates = true,
+                DeferLocationUpdates = true,
+                DeferralDistanceMeters = 1,
+                DeferralTime = TimeSpan.FromSeconds(1),
+                ListenForSignificantChanges = true,
+                PauseLocationUpdatesAutomatically = false
+            });
 
-            //CrossGeolocator.Current.PositionChanged += PositionChanged;
-        }
-
-        private void PositionChanged(object sender, PositionEventArgs e)
-        {
-
-            //If updating the UI, ensure you invoke on main thread
-            var position = e.Position;
-            var output = "Full: Lat: " + position.Latitude + " Long: " + position.Longitude;
-            output += "\n" + $"Time: {position.Timestamp}";
-            output += "\n" + $"Heading: {position.Heading}";
-            output += "\n" + $"Speed: {position.Speed}";
-            output += "\n" + $"Accuracy: {position.Accuracy}";
-            output += "\n" + $"Altitude: {position.Altitude}";
-            output += "\n" + $"Altitude Accuracy: {position.AltitudeAccuracy}";
-            Debug.WriteLine(output);
+            CrossGeolocator.Current.PositionChanged += CrossGeolocator_Current_PositionChanged;
         }
     }
 }

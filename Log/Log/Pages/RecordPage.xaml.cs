@@ -71,10 +71,10 @@ namespace Log.Pages
             }
         }
 
-        protected override void OnAppearing()
-        {
-            SetPosition();
-        }
+        //protected override void OnAppearing()
+        //{
+        //    SetPosition();
+        //}
 
         private void SaveTrack()
         {
@@ -133,7 +133,8 @@ namespace Log.Pages
                 //var positionXamarinFormsMapsPosition =
                 //    new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
                 var snappedPointDb =
-                    new SnappedPointDb{Latitude = positionGeolocator .Latitude, Longitude =  positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
+                    new SnappedPointDb { TrackId = track.Id,
+                        Latitude = positionGeolocator .Latitude, Longitude =  positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
 
                 //Positions.Add(position);
                 //count++;
