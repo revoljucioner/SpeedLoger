@@ -9,7 +9,7 @@ namespace Log.Models
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
-        public string TrackId { get; set; }
+        public int TrackId { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public DateTime Time { get; set; }

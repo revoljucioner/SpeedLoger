@@ -38,7 +38,7 @@ namespace Log.DB
             return item;
         }
 
-        public SnappedPointDb[] GetItemsByTrackId(string trackId)
+        public SnappedPointDb[] GetItemsByTrackId(int trackId)
         {
             SnappedPointDb[] items;
             try
@@ -57,7 +57,7 @@ namespace Log.DB
             return database.Delete<SnappedPointDb>(id);
         }
 
-        public void DeleteItemsByTrackId(string trackId)
+        public void DeleteItemsByTrackId(int trackId)
         {
             //var snappedPointsToDelete = GetItems().Where(i => i.TrackId == trackId);
             //var snappedPointsToDeleteIds = snappedPointsToDelete.Select(i => i.Id);

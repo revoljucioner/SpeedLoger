@@ -42,10 +42,10 @@ namespace Log.Pages
         private void StartRecording()
         {
             IDevice device = DependencyService.Get<IDevice>();
-            trackId = Guid.NewGuid().ToString();
+            //trackId = Guid.NewGuid().ToString();
             track = new Track
-                { Id = trackId, StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
-
+                { StartDateTime = startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
+            track.Id = App.Database.SaveItem(track);
             RecordInProgress = true;
         }
 
@@ -78,8 +78,8 @@ namespace Log.Pages
 
         private void SaveTrack()
         {
-            track.EndDateTime = DateTime.UtcNow;
-            App.Database.SaveItem(track);
+            //track.EndDateTime = DateTime.UtcNow;
+            //App.Database.SaveItem(track);
         }
 
         private void SaveSnappedPointToDb(SnappedPoint snappedPoint)
@@ -91,7 +91,7 @@ namespace Log.Pages
                 if (distance >= minDifferenceBetweenPoints)
                 {
                     var snappedPointDb = new SnappedPointDb(snappedPoint);
-                    snappedPointDb.TrackId = trackId;
+                    snappedPointDb.TrackId = track.Id;
                     App.SnappedPointDatabase.SaveItem(snappedPointDb);
                     previousPosition = currentPosition;
                 }

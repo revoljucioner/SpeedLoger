@@ -6,9 +6,9 @@ namespace Log.Models
     [Table("Tracks")]
     public class Track
     {
-        //[PrimaryKey, AutoIncrement, Column("_id")]
-        [PrimaryKey, Column("_id")]
-        public string Id { get; set; }
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        //[PrimaryKey, Column("_id")]
+        public int Id { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
         public string DeviceId { get; set; }

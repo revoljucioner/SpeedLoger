@@ -14,7 +14,7 @@ namespace Log.Pages
         private double borderCoeficient = 0.8;
         private List<SnappedPoint> _snappedPointsList;
 
-        public MapPage(string trackId)
+        public MapPage(int trackId)
         {
             InitializeComponent();
 

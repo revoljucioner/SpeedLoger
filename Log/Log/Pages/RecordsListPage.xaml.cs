@@ -22,12 +22,12 @@ namespace Log.Pages
         {
         }
 
-        private async void OpenMap(string trackId)
+        private async void OpenMap(int trackId)
         {
             await Navigation.PushAsync(new MapPage(trackId), true);
         }
 
-        private string GetIdFromSenderButton(object sender)
+        private int GetIdFromSenderButton(object sender)
         {
             var trackListItem = (TrackListItem)((Button)sender).CommandParameter;
             return trackListItem.Id;
