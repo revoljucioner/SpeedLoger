@@ -11,7 +11,8 @@ namespace Log.Pages
     public partial class RecordPage : ContentPage
     {
         private readonly DateTime _startTimeConst;
-        private Track _track;
+        private Track _track = new Track();
+        //private int _trackId;
         private int _snappedPointsCount = 0;
         // meters
         readonly ILocator _locator;
@@ -26,15 +27,15 @@ namespace Log.Pages
 
             _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
             _locator.StartListening(CrossGeolocator_Current_PositionChanged);
-            _track.Id =SaveTrackToDb();
+
+            _track.StartDateTime = _startTimeConst;
+
+            _track.Id = SaveTrackToDb(_track);
         }
 
-        private int SaveTrackToDb()
+        private int SaveTrackToDb(Track track)
         {
-            IDevice device = DependencyService.Get<IDevice>();
-            _track = new Track
-            { StartDateTime = _startTimeConst, DeviceId = device.GetDeviceId(), Imei = device.GetImei() };
-            return App.Database.SaveItem(_track);
+            return App.Database.SaveItem(track);
         }
 
         public void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)

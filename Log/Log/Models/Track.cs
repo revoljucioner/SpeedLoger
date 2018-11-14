@@ -11,8 +11,6 @@ namespace Log.Models
         public int Id { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public string DeviceId { get; set; }
-        public string Imei { get; set; }
 
         public TrackListItem ToTrackListItem()
         {

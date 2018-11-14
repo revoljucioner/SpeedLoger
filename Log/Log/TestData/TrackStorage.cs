@@ -7,16 +7,12 @@ namespace Log.TestData
     {
         public static Track CommonSanFranciscoTrack => new Track
         {
-            Imei = "862840034891966",
-            DeviceId = "bbc29aac02853470",
             StartDateTime = DateTime.Parse("2018-01-01T10:00:01.00000Z"),
             EndDateTime = DateTime.Parse("2018-01-01T10:10:12.00000Z"),
         };
 
         public static Track FromLesnayaToPushkinaTrack => new Track
         {
-            Imei = "862840034891966",
-            DeviceId = "bbc29aac02853470",
             StartDateTime = DateTime.Parse("2018-11-08T10:00:01.00000Z"),
             EndDateTime = DateTime.Parse("2018-11-08T10:10:12.00000Z"),
         };
