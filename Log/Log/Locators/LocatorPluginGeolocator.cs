@@ -1,74 +1,33 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Log.Models;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
-using Xamarin.Forms;
 
 namespace Log.Locators
 {
     public class LocatorPluginGeolocator : ILocator
     {
         private IGeolocator geolocator;
-        private TimeSpan _timeout;
-        private int _desiredAccuracy;
+        private TimeSpan _minimumTime;
+        private double _minimumDistance;
 
 
-        public LocatorPluginGeolocator(int desiredAccuracy, TimeSpan timeout)
+        public LocatorPluginGeolocator(TimeSpan minimumTime, double minimumDistance)
         {
-            _desiredAccuracy = desiredAccuracy;
-            _timeout = timeout;
-        }
-
-        public async Task<Xamarin.Forms.Maps.Position> GetPositionAsync()
-        {
-            geolocator = CrossGeolocator.Current;
-            geolocator.DesiredAccuracy = _desiredAccuracy;
-
-            Plugin.Geolocator.Abstractions.Position positionGeolocator = await geolocator.GetPositionAsync(timeout: _timeout);
-            var positionXamarinMaps  = new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
-            return positionXamarinMaps;
-        }
-
-        public async Task<SnappedPoint> GetSnappedPointAsync()
-        {
-            geolocator = CrossGeolocator.Current;
-            geolocator.DesiredAccuracy = _desiredAccuracy;
-
-            Plugin.Geolocator.Abstractions.Position positionGeolocator = await geolocator.GetPositionAsync(timeout: _timeout);
-            var positionXamarinMaps = new Xamarin.Forms.Maps.Position(positionGeolocator.Latitude, positionGeolocator.Longitude);
-            var snappedPoint = new SnappedPoint ( positionXamarinMaps ,  positionGeolocator.Timestamp.UtcDateTime);
-            return snappedPoint;
-        }
-
-        public void  SetPositionChangedEvent(EventHandler<PositionEventArgs> eventMethod)
-        {
-            //geolocator.PositionChanged += CrossGeolocator_Current_PositionChanged;
-            //geolocator.PositionChanged += CrossGeolocator_Current_PositionChanged;
-        }
-
-        public void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)
-        {
-
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                var positionGeolocator = e.Position;
-                var snappedPointDb =
-                    new SnappedPointDb { TrackId = 1112, Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
-                App.SnappedPointDatabase.SaveItem(snappedPointDb);
-
-            });
+            _minimumTime = minimumTime;
+            _minimumDistance = minimumDistance;
         }
 
         public async Task StartListening(EventHandler<PositionEventArgs> eventMethod)
         {
             if (CrossGeolocator.Current.IsListening)
                 return;
-
-            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(5), 10, true, new Plugin.Geolocator.Abstractions.ListenerSettings
+            // TODO:
+            // просмотреть все эти параметры
+            // выглядит так будто класс ListenerSettings можно удалить
+            await CrossGeolocator.Current.StartListeningAsync(_minimumTime, _minimumDistance, true, new ListenerSettings
             {
-                ActivityType = Plugin.Geolocator.Abstractions.ActivityType.AutomotiveNavigation,
+                ActivityType = ActivityType.AutomotiveNavigation,
                 AllowBackgroundUpdates = true,
                 DeferLocationUpdates = true,
                 DeferralDistanceMeters = 1,

@@ -7,6 +7,7 @@ namespace Log.Models
     [Table("SnappedPointDb")]
     public class SnappedPointDb
     {
+        //попробовать все таки переделать долготу-широту на вложенный клас Позиция
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
         public int TrackId { get; set; }
