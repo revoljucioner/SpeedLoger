@@ -25,16 +25,7 @@ namespace Log.Locators
             // TODO:
             // просмотреть все эти параметры
             // выглядит так будто класс ListenerSettings можно удалить
-            await CrossGeolocator.Current.StartListeningAsync(_minimumTime, _minimumDistance, true, new ListenerSettings
-            {
-                ActivityType = ActivityType.AutomotiveNavigation,
-                AllowBackgroundUpdates = true,
-                DeferLocationUpdates = true,
-                DeferralDistanceMeters = 5,
-                DeferralTime = TimeSpan.FromSeconds(1),
-                ListenForSignificantChanges = true,
-                PauseLocationUpdatesAutomatically = false
-            });
+            await CrossGeolocator.Current.StartListeningAsync(_minimumTime, _minimumDistance, false);
 
             CrossGeolocator.Current.PositionChanged += eventMethod;
         }
