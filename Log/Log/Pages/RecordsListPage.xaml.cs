@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Log.Models;
+using Log.Services.Controllers;
+using Log.Services.Models;
 using Xamarin.Forms;
 
 namespace Log.Pages
@@ -10,6 +12,7 @@ namespace Log.Pages
     public partial class RecordsListPage : ContentPage
     {
         private List<TrackListItem> trackList;
+        private SpeedServerService _speedServerService = new SpeedServerService();
 
         public RecordsListPage()
         {
@@ -35,12 +38,11 @@ namespace Log.Pages
 
         #region activities
 
-        private void OnOpenClicked(object sender, EventArgs e)
+        private async void OnOpenClicked(object sender, EventArgs e)
         {
             var trackId = GetIdFromSenderButton(sender);
 
-            //if (!App.Database.GetItem(trackId).Decoded)
-            //    DecodeTrack(trackId);
+            var ttt = await _speedServerService.GetSnappedPointsArrayFromSpeedServer(new SnappedPointRequest[0]);
             OpenMap(trackId);
         }
 
