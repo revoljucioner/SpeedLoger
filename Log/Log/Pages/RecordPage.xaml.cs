@@ -16,6 +16,7 @@ namespace Log.Pages
         private int _snappedPointsCount = 0;
         // meters
         readonly ILocator _locator;
+        private Position _previousPosition = new Position(0, 0);
 
         public RecordPage()
         {
@@ -42,13 +43,25 @@ namespace Log.Pages
         {
             // TODO:
             // попробовать вынести с главного потока
+
             Device.BeginInvokeOnMainThread(() =>
             {
                 var positionGeolocator = e.Position;
-                var snappedPointDb =
-                    new SnappedPointDb { TrackId = _track.Id, Latitude = positionGeolocator.Latitude, Longitude = positionGeolocator.Longitude, Time = positionGeolocator.Timestamp.UtcDateTime };
-                App.SnappedPointDatabase.SaveItem(snappedPointDb);
-                _snappedPointsCount += 1;
+
+                if ((positionGeolocator.Latitude != _previousPosition.Latitude) || (positionGeolocator.Longitude != _previousPosition.Longitude))
+                {
+                    var snappedPointDb =
+                        new SnappedPointDb
+                        {
+                            TrackId = _track.Id,
+                            Latitude = positionGeolocator.Latitude,
+                            Longitude = positionGeolocator.Longitude,
+                            Time = positionGeolocator.Timestamp.UtcDateTime
+                        };
+                    App.SnappedPointDatabase.SaveItem(snappedPointDb);
+                    _snappedPointsCount += 1;
+                    _previousPosition = positionGeolocator;
+                }
             });
         }
 

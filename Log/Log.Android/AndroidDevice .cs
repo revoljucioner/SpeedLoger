@@ -14,10 +14,10 @@ namespace Log.Droid
             return deviceId;
         }
 
-        public string GetImei()
-        {
-            var telephonyManager = (Android.Telephony.TelephonyManager)Forms.Context.GetSystemService(Android.Content.Context.TelephonyService);
-            return telephonyManager.DeviceId;
-        }
+        //public string GetImei()
+        //{
+        //    var telephonyManager = (Android.Telephony.TelephonyManager)Forms.Context.GetSystemService(Android.Content.Context.TelephonyService);
+        //    return telephonyManager.DeviceId;
+        //}
     }
 }
