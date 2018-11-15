@@ -25,7 +25,7 @@ namespace Log.Pages
 
             startTime.Text = _startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
-            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
+            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 5);
             _locator.StartListening(CrossGeolocator_Current_PositionChanged);
 
             _track.StartDateTime = _startTimeConst;
@@ -56,6 +56,7 @@ namespace Log.Pages
 
         private async void ButtonStop_Clicked(object sender, EventArgs e)
         {
+            await _locator.StopListening(CrossGeolocator_Current_PositionChanged);
             if (_snappedPointsCount > 1)
             {
                 await DisplayAlert("Successful", "Track is saved.", "OK");

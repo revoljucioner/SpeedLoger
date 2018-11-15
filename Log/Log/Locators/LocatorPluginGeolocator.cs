@@ -30,7 +30,7 @@ namespace Log.Locators
                 ActivityType = ActivityType.AutomotiveNavigation,
                 AllowBackgroundUpdates = true,
                 DeferLocationUpdates = true,
-                DeferralDistanceMeters = 1,
+                DeferralDistanceMeters = 5,
                 DeferralTime = TimeSpan.FromSeconds(1),
                 ListenForSignificantChanges = true,
                 PauseLocationUpdatesAutomatically = false
@@ -38,5 +38,14 @@ namespace Log.Locators
 
             CrossGeolocator.Current.PositionChanged += eventMethod;
         }
+
+        public async Task StopListening(EventHandler<PositionEventArgs> eventMethod)
+        {
+            if (!CrossGeolocator.Current.IsListening)
+                return;
+            await CrossGeolocator.Current.StopListeningAsync();
+            CrossGeolocator.Current.PositionChanged -= eventMethod;
+        }
     }
+
 }

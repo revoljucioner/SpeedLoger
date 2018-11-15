@@ -7,5 +7,6 @@ namespace Log.Locators
     public interface ILocator
     {
         Task StartListening(EventHandler<PositionEventArgs> eventMethod);
+        Task StopListening(EventHandler<PositionEventArgs> eventMethod);
     }
 }
