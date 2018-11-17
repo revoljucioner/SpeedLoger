@@ -42,7 +42,6 @@ namespace Log.Pages
         {
             var trackId = GetIdFromSenderButton(sender);
 
-            var ttt = await _speedServerService.GetSnappedPointsArrayFromSpeedServer(new SnappedPointRequest[0]);
             OpenMap(trackId);
         }
 
@@ -55,6 +54,13 @@ namespace Log.Pages
                 App.Database.DeleteItem(trackId);
                 App.SnappedPointDatabase.DeleteItemsByTrackId(trackId);
             }
+        }
+
+        private async void OnDecodeClicked(object sender, EventArgs e)
+        {
+            var trackId = GetIdFromSenderButton(sender);
+
+            var ttt = await _speedServerService.GetSnappedPointsArrayFromSpeedServer(new SnappedPointRequest[0]);
         }
 
         #endregion
