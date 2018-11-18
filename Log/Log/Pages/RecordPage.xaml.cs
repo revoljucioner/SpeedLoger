@@ -70,6 +70,7 @@ namespace Log.Pages
         private async void ButtonStop_Clicked(object sender, EventArgs e)
         {
             await _locator.StopListening(CrossGeolocator_Current_PositionChanged);
+            App.Database.UpdateStatusActive(_track.Id, true);
             if (_snappedPointsCount > 1)
             {
                 await DisplayAlert("Successful", "Track is saved.", "OK");

@@ -19,7 +19,7 @@ namespace Log.Pages
         public RecordsListPage()
         {
             InitializeComponent();
-            trackList = App.Database.GetItems().Select(i => i.ToTrackListItem()).ToList();
+            trackList = App.Database.GetItems().Where(i=>i.StatusActive).Select(i => i.ToTrackListItem()).ToList();
             recordsList.ItemsSource = trackList;
         }
 

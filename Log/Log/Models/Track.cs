@@ -12,6 +12,8 @@ namespace Log.Models
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
 
+        public bool StatusActive = false;
+
         public TrackListItem ToTrackListItem()
         {
             var trackListItem = new TrackListItem();
