@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Log.Services.Controllers
             return client;
         }
 
-        public async Task<SpeedModel> GetSnappedPointsArrayFromSpeedServer(SnappedPointRequest[] snappedPointsRequestArray)
+        public async Task<SpeedModel> GetSnappedPointsArrayFromSpeedServer(IEnumerable<SnappedPointRequest> snappedPointsRequestArray)
         {
             snappedPointsRequestArray = JsonConvert.DeserializeObject<SnappedPointRequest[]>(conTest);
 

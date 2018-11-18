@@ -1,5 +1,6 @@
 ﻿using Log.DB;
 using Log.Helpers;
+using Log.Models;
 using Log.Pages;
 using Log.TestData;
 using Xamarin.Forms;
@@ -10,8 +11,11 @@ namespace Log
 	{
         public const string TracksUncode = "tracksUncode.db";
 	    public const string SnappedPointDatabasePath = "snappedPoints.db";
+	    public const string DecodedSnappedPointsDatabasePath = "decodedSnappedPoints.db";
         public static TrackRepository database;
 	    public static SnappedPointRepository snappedPointDatabase;
+	    public static DecodedSnappedPointsDb decodedSnappedPointsDb;
+
         public static TrackRepository Database
         {
             get
@@ -33,6 +37,18 @@ namespace Log
 	                snappedPointDatabase = new SnappedPointRepository(SnappedPointDatabasePath);
 	            }
 	            return snappedPointDatabase;
+	        }
+	    }
+
+	    public static DecodedSnappedPointsDb DecodedSnappedPointsDatabase
+        {
+	        get
+	        {
+	            if (decodedSnappedPointsDb == null)
+	            {
+	                decodedSnappedPointsDb = new DecodedSnappedPointsDb(DecodedSnappedPointsDatabasePath);
+	            }
+	            return decodedSnappedPointsDb;
 	        }
 	    }
 

@@ -12,18 +12,36 @@ namespace Log.Pages
     public partial class MapPage : ContentPage
     {
         private double borderCoeficient = 0.8;
-        private List<SnappedPoint> _snappedPointsList;
+        //private List<SnappedPoint> _snappedPointsList;
+        private List<SnappedPointWithElevation> _snappedPointsWithElevationList;
 
-        public MapPage(int trackId)
+        //public MapPage(List<SnappedPoint> snappedPointsList)
+        //{
+        //    InitializeComponent();
+
+        //    //var snappedPointsDb = App.SnappedPointDatabase.GetItemsByTrackId(trackId);
+        //    //if (snappedPointsDb.Length<2)
+        //    //    throw new NotImplementedException();
+        //    //_snappedPointsList = snappedPointsDb.Select(i=>i.ToSnappedPoint()).ToList();
+        //    _snappedPointsList = snappedPointsList;
+
+        //    customMap.PolylineSegmentList = _snappedPointsList.ToPolylineSegmentList();
+
+        //    DrawSpeedColorBoxesLayout(10, 65);
+        //    SizeChanged += MoveToRegion;
+        //}
+
+        public MapPage(List<SnappedPointWithElevation> snappedPointsList)
         {
             InitializeComponent();
 
-            var snappedPointsDb = App.SnappedPointDatabase.GetItemsByTrackId(trackId);
-            if (snappedPointsDb.Length<2)
-                throw new NotImplementedException();
-            _snappedPointsList = snappedPointsDb.Select(i=>i.ToSnappedPoint()).ToList();
+            //var snappedPointsDb = App.SnappedPointDatabase.GetItemsByTrackId(trackId);
+            //if (snappedPointsDb.Length<2)
+            //    throw new NotImplementedException();
+            //_snappedPointsList = snappedPointsDb.Select(i=>i.ToSnappedPoint()).ToList();
+            _snappedPointsWithElevationList = _snappedPointsWithElevationList;
 
-            customMap.PolylineSegmentList = _snappedPointsList.ToPolylineSegmentList();
+            customMap.PolylineSegmentList = _snappedPointsWithElevationList.ToPolylineSegmentList();
 
             DrawSpeedColorBoxesLayout(10, 65);
             SizeChanged += MoveToRegion;
@@ -44,13 +62,40 @@ namespace Log.Pages
             }
         }
 
+        //private void MoveToRegion(object sender, EventArgs e)
+        //{
+        //    var latitudeMin = _snappedPointsList.Select(i => i.Position.Latitude).Min();
+        //    var latitudeMax = _snappedPointsList.Select(i => i.Position.Latitude).Max();
+
+        //    var longitudeMin = _snappedPointsList.Select(i => i.Position.Longitude).Min();
+        //    var longitudeMax = _snappedPointsList.Select(i => i.Position.Longitude).Max();
+
+        //    var avgLatitude = (latitudeMin + latitudeMax) / 2;
+        //    var avgLongitude = (longitudeMin + longitudeMax) / 2;
+
+        //    var trackWidth = new GeoCoordinate(avgLatitude, longitudeMin).GetDistanceTo(new GeoCoordinate(avgLatitude, longitudeMax));
+        //    var trackHeight = new GeoCoordinate(latitudeMin, avgLongitude).GetDistanceTo(new GeoCoordinate(latitudeMax, avgLongitude));
+
+        //    var trackDimension = trackHeight / trackWidth;
+        //    var pageDimension = Height / Width;
+
+        //    var centerPosition = new Position(avgLatitude, avgLongitude);
+
+        //    var diameterMeters =
+        //        pageDimension >= trackDimension
+        //        ? trackHeight
+        //        : trackWidth * trackDimension / pageDimension / 2;
+
+        //    customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters((1 / borderCoeficient) * diameterMeters)));
+        //}
+
         private void MoveToRegion(object sender, EventArgs e)
         {
-            var latitudeMin = _snappedPointsList.Select(i => i.Position.Latitude).Min();
-            var latitudeMax = _snappedPointsList.Select(i => i.Position.Latitude).Max();
+            var latitudeMin = _snappedPointsWithElevationList.Select(i => i.Position.Latitude).Min();
+            var latitudeMax = _snappedPointsWithElevationList.Select(i => i.Position.Latitude).Max();
 
-            var longitudeMin = _snappedPointsList.Select(i => i.Position.Longitude).Min();
-            var longitudeMax = _snappedPointsList.Select(i => i.Position.Longitude).Max();
+            var longitudeMin = _snappedPointsWithElevationList.Select(i => i.Position.Longitude).Min();
+            var longitudeMax = _snappedPointsWithElevationList.Select(i => i.Position.Longitude).Max();
 
             var avgLatitude = (latitudeMin + latitudeMax) / 2;
             var avgLongitude = (longitudeMin + longitudeMax) / 2;
@@ -65,8 +110,8 @@ namespace Log.Pages
 
             var diameterMeters =
                 pageDimension >= trackDimension
-                ? trackHeight
-                : trackWidth * trackDimension / pageDimension / 2;
+                    ? trackHeight
+                    : trackWidth * trackDimension / pageDimension / 2;
 
             customMap.MoveToRegion(MapSpan.FromCenterAndRadius(centerPosition, Distance.FromMeters((1 / borderCoeficient) * diameterMeters)));
         }

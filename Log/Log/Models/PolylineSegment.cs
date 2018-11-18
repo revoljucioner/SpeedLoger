@@ -4,10 +4,18 @@ namespace Log.Models
 {
     public class PolylineSegment
     {
-        public SnappedPoint SnappedPointStart { get; set; }
-        public SnappedPoint SnappedPointEnd { get; set; }
+        //public SnappedPoint SnappedPointStart { get; set; }
+        //public SnappedPoint SnappedPointEnd { get; set; }
+        public SnappedPointWithElevation SnappedPointStart { get; set; }
+        public SnappedPointWithElevation SnappedPointEnd { get; set; }
 
-        public PolylineSegment(SnappedPoint snappedPointStart, SnappedPoint snappedPointEnd)
+        //public PolylineSegment(SnappedPoint snappedPointStart, SnappedPoint snappedPointEnd)
+        //{
+        //    SnappedPointStart = snappedPointStart;
+        //    SnappedPointEnd = snappedPointEnd;
+        //}
+
+        public PolylineSegment(SnappedPointWithElevation snappedPointStart, SnappedPointWithElevation snappedPointEnd)
         {
             SnappedPointStart = snappedPointStart;
             SnappedPointEnd = snappedPointEnd;

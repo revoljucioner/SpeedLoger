@@ -1,4 +1,5 @@
 ﻿using System;
+using Log.Services.Models;
 using SQLite;
 using Xamarin.Forms.Maps;
 
@@ -29,6 +30,13 @@ namespace Log.Models
         public SnappedPoint ToSnappedPoint()
         {
             return new SnappedPoint(new Position(Latitude, Longitude), Time);
+        }
+
+        public SnappedPointRequest ToSnappedPointRequest()
+        {
+            var location = new Location(Latitude, Longitude);
+            var snappedPointRequest = new SnappedPointRequest { Location = location, time = Time };
+            return snappedPointRequest;
         }
     }
 }

@@ -4,13 +4,9 @@
     {
         public double elevation { get; set; }
 
-        public LocationWithElevation()
-        { }
-
-        public LocationWithElevation(Location location)
+        public LocationWithElevation(Location location, double _elevation) :base(location.latitude, location.longitude)
         {
-            this.latitude = location.latitude;
-            this.longitude = location.longitude;
+            elevation = _elevation;
         }
     }
 }
