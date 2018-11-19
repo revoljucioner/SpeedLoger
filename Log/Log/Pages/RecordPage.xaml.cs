@@ -70,13 +70,18 @@ namespace Log.Pages
         private async void ButtonStop_Clicked(object sender, EventArgs e)
         {
             await _locator.StopListening(CrossGeolocator_Current_PositionChanged);
-            App.Database.UpdateStatusActive(_track.Id, true);
+
             if (_snappedPointsCount > 1)
             {
+                _track.EndDateTime = DateTime.UtcNow;
+                _track.StatusActive = true;
+                App.Database.Update(_track);
                 await DisplayAlert("Successful", "Track is saved.", "OK");
             }
             else
             {
+                App.Database.DeleteItem(_track.Id);
+                App.SnappedPointDatabase.DeleteItemsByTrackId(_track.Id);
                 await DisplayAlert("Alert", "Recorded track is too short. Saving is cancelled.", "OK");
             }
             await Navigation.PopAsync();

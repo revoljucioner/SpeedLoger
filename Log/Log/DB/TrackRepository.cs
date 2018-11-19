@@ -59,13 +59,20 @@ namespace Log.DB
             //return item.Id;
         }
 
-        public void UpdateStatusActive(int trackId, bool statusActive)
+        public void Update(Track track)
         {
-            if (trackId == 0)
+            if (track.Id == 0)
                 throw new Exception();
-            var track = GetItem(trackId);
-            track.StatusActive = statusActive;
             database.Update(track);
         }
+
+        //public void UpdateStatusActive(int trackId, bool statusActive)
+        //{
+        //    if (trackId == 0)
+        //        throw new Exception();
+        //    var track = GetItem(trackId);
+        //    track.StatusActive = statusActive;
+        //    database.Update(track);
+        //}
     }
 }

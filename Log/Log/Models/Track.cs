@@ -11,8 +11,7 @@ namespace Log.Models
         public int Id { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-
-        public bool StatusActive = false;
+        public bool StatusActive { get; set; }
 
         public TrackListItem ToTrackListItem()
         {
