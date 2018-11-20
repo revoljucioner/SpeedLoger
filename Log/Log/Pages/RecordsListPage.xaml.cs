@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Log.Models;
 using Log.Services.Controllers;
 using Log.Services.Models;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace Log.Pages
 {
@@ -66,28 +64,21 @@ namespace Log.Pages
         private async void OnOpenDecodedClicked(object sender, EventArgs e)
         {
             var trackId = GetIdFromSenderButton(sender);
-            var speedModel = await DecodeTrack(trackId);
-            //var snappedPointsWithElevationDb = speedModel.snappedPoints.Select(i=>(SnappedPointWithElevationDb)(i.ToSnappedPointWithElevation()));
-            //
-            var snappedPointsWithElevation = speedModel.snappedPoints.Select(i => (i.ToSnappedPointWithElevation()));
-            var snappedPointsWithElevationDb = snappedPointsWithElevation.Select(i => i.ToSnappedPointsWithElevationDb(trackId));
-            //var tt = snappedPointsWithElevationDb2.Cast<SnappedPointWithElevationDb>();
-            //var tt2 = snappedPointsWithElevationDb2.Select(i=> i as SnappedPointWithElevationDb);
-            //var tt3 = snappedPointsWithElevationDb2.OfType<SnappedPointWithElevationDb>();
-            //
-            //var b = AutoMapper.Mapper.Map<SnappedPointWithElevationDb>(speedModel.snappedPoints[0]);
-            //var snappedPointsWithElevationDb = new SnappedPointWithElevationDb[0];
-            //
-            //snappedPointsWithElevationDb.ForEach(i=>i.TrackId=trackId);
-            App.DecodedSnappedPointsDatabase.SaveItems(snappedPointsWithElevationDb);
 
-            ////
-            /// snappedPointsWithElevationDb
-            /// 
-            if (snappedPointsWithElevationDb.Count() < 2)
+            if (!App.Database.GetItem(trackId).Decoded)
+            {
+                var speedModel = await DecodeTrack(trackId);
+                var snappedPointsWithElevation = speedModel.snappedPoints.Select(i => (i.ToSnappedPointWithElevation()));
+                var snappedPointsWithElevationDb = snappedPointsWithElevation.Select(i => i.ToSnappedPointsWithElevationDb(trackId));
+                App.DecodedSnappedPointsDatabase.SaveItems(snappedPointsWithElevationDb);
+                App.Database.SetDecoded(trackId, true);
+            }
+
+            var snappedPointsWithElevationFromDb = App.DecodedSnappedPointsDatabase.GetItemsByTrackId(trackId).OrderBy(i=>i.Time);
+
+            if (snappedPointsWithElevationFromDb.Count() < 2)
                 throw new NotImplementedException();
-            //var snappedPointsList = snappedPointsWithElevationDb.Select(i => i.ToSnappedPoint()).ToList();
-            var snappedPointsList = snappedPointsWithElevationDb.Select(i=>i.ToSnappedPointWithElevation()).ToList();
+            var snappedPointsList = snappedPointsWithElevationFromDb.Select(i=>i.ToSnappedPointWithElevation()).ToList();
 
             await Navigation.PushAsync(new MapPage(snappedPointsList), true);
         }

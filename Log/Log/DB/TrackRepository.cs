@@ -66,6 +66,13 @@ namespace Log.DB
             database.Update(track);
         }
 
+        public void SetDecoded(int id, bool decoded)
+        {
+            var track = GetItem(id);
+            track.Decoded = decoded;
+            database.Update(track);
+        }
+
         //public void UpdateStatusActive(int trackId, bool statusActive)
         //{
         //    if (trackId == 0)
