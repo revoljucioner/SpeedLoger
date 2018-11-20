@@ -15,7 +15,6 @@
 								<Label Text="{Binding StartDateTime}" FontSize="Small"  HorizontalOptions="FillAndExpand"/>
 								<Button Text="Open" BackgroundColor="Gray" CommandParameter="{Binding .}"  HorizontalOptions="End" Clicked="OnOpenClicked" />
 								<Button Text="X" BackgroundColor="Gray" CommandParameter="{Binding .}"  HorizontalOptions="End" Clicked="OnDeleteClicked" />
-								<Button Text="OpenD" BackgroundColor="Gray" CommandParameter="{Binding .}"  HorizontalOptions="End" Clicked="OnOpenDecodedClicked" />
 							</StackLayout>
 						</ViewCell.View>
 					</ViewCell>
