@@ -54,7 +54,12 @@ namespace Log
 
         public App ()
 		{
-			InitializeComponent();
+		    //AutoMapper.Mapper.Initialize(cfg => {
+		    //    cfg.CreateMap<SnappedPointWithElevation, SnappedPointWithElevationDb>();
+		    //    /* etc */
+		    //});
+
+		    InitializeComponent();
             MainPage = new NavigationPage(new MainPage());
             //MainPage = new NavigationPage(new MainPageCarousel2());
 

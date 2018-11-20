@@ -25,7 +25,7 @@ namespace Log.Services.Controllers
 
         public async Task<SpeedModel> GetSnappedPointsArrayFromSpeedServer(IEnumerable<SnappedPointRequest> snappedPointsRequestArray)
         {
-            snappedPointsRequestArray = JsonConvert.DeserializeObject<SnappedPointRequest[]>(conTest);
+            //snappedPointsRequestArray = JsonConvert.DeserializeObject<SnappedPointRequest[]>(conTest);
 
             HttpClient client = GetClient();
             var response = await client.PostAsync(Url,
@@ -37,7 +37,14 @@ namespace Log.Services.Controllers
                 return null;
 
             var contentString = await response.Content.ReadAsStringAsync();
-            var value = JsonConvert.DeserializeObject<SpeedModel>(contentString);
+            SpeedModel value = null;
+            try
+            {
+                value = JsonConvert.DeserializeObject<SpeedModel>(contentString);
+            }
+            catch (Exception EX_NAME)
+            {
+            }
             return value;
         }
 

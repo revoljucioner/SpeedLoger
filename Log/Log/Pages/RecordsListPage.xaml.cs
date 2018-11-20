@@ -67,8 +67,18 @@ namespace Log.Pages
         {
             var trackId = GetIdFromSenderButton(sender);
             var speedModel = await DecodeTrack(trackId);
-            var snappedPointsWithElevationDb = speedModel.snappedPoints.Select(i=>(SnappedPointWithElevationDb)i.ToSnappedPointWithElevation());
-            snappedPointsWithElevationDb.ForEach(i=>i.TrackId=trackId);
+            //var snappedPointsWithElevationDb = speedModel.snappedPoints.Select(i=>(SnappedPointWithElevationDb)(i.ToSnappedPointWithElevation()));
+            //
+            var snappedPointsWithElevation = speedModel.snappedPoints.Select(i => (i.ToSnappedPointWithElevation()));
+            var snappedPointsWithElevationDb = snappedPointsWithElevation.Select(i => i.ToSnappedPointsWithElevationDb(trackId));
+            //var tt = snappedPointsWithElevationDb2.Cast<SnappedPointWithElevationDb>();
+            //var tt2 = snappedPointsWithElevationDb2.Select(i=> i as SnappedPointWithElevationDb);
+            //var tt3 = snappedPointsWithElevationDb2.OfType<SnappedPointWithElevationDb>();
+            //
+            //var b = AutoMapper.Mapper.Map<SnappedPointWithElevationDb>(speedModel.snappedPoints[0]);
+            //var snappedPointsWithElevationDb = new SnappedPointWithElevationDb[0];
+            //
+            //snappedPointsWithElevationDb.ForEach(i=>i.TrackId=trackId);
             App.DecodedSnappedPointsDatabase.SaveItems(snappedPointsWithElevationDb);
 
             ////
