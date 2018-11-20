@@ -7,5 +7,6 @@ namespace Log.Elements
     public class CustomMap : Map
     {
         public List<PolylineSegment> PolylineSegmentList { get; set; }
+        public MapColorsCollection mapColorsCollection;
     }
 }

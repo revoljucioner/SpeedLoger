@@ -14,6 +14,7 @@ namespace Log.Droid
     public class CustomMapRenderer : MapRenderer
     {
         public List<PolylineSegment> PolylineSegmentList { get; set; }
+        public MapColorsCollection mapColorsCollection;
 
         public CustomMapRenderer(Context context) : base(context)
         {
@@ -32,6 +33,7 @@ namespace Log.Droid
             {
                 var formsMap = (CustomMap)e.NewElement;
                 PolylineSegmentList = formsMap.PolylineSegmentList;
+                mapColorsCollection = formsMap.mapColorsCollection;
                 Control.GetMapAsync(this);
             }
         }
@@ -46,7 +48,7 @@ namespace Log.Droid
         {
             foreach (var polylineSegment in PolylineSegmentList)
             {
-                var colorInt = MapColorsCollection.GetColorForSpeed(polylineSegment.SpeedBetweenPoints());
+                var colorInt = mapColorsCollection.GetColorForSpeed(polylineSegment.SpeedBetweenPoints());
                 DrawPolylineSegment(polylineSegment, colorInt);
             }
         }

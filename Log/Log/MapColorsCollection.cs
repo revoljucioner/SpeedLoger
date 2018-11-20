@@ -2,7 +2,7 @@
 
 namespace Log
 {
-    public static class MapColorsCollection
+    public class MapColorsCollection
     {
         // 0x66 + RGB hex
         public static int[] ColorArray = new[]
@@ -22,7 +22,7 @@ namespace Log
             0x662a0059 // dark purple?          // 12
         };
 
-        public static SpeedColorInterval[] SpeedColorIntervalsArray = new[]
+        public SpeedColorInterval[] SpeedColorIntervalsArray = new[]
         {
             new SpeedColorInterval(0,3,ColorArray[0]),
             new SpeedColorInterval(3,10,ColorArray[1]),
@@ -39,7 +39,7 @@ namespace Log
             //new SpeedColorInterval(210,int.MaxValue,ColorArray[12])
         };
 
-        public static int GetColorForSpeed(double speed)
+        public int GetColorForSpeed(double speed)
         {
             var color = SpeedColorIntervalsArray.First(i => i.LeftSpeedBorder <= speed && i.RightSpeedBorder > speed).SpeedColor;
             return color;
