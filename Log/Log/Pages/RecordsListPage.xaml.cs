@@ -87,7 +87,7 @@ namespace Log.Pages
             if (snappedPointsWithElevationDb.Count() < 2)
                 throw new NotImplementedException();
             //var snappedPointsList = snappedPointsWithElevationDb.Select(i => i.ToSnappedPoint()).ToList();
-            var snappedPointsList = snappedPointsWithElevationDb.Select(i=>(SnappedPointWithElevation)i).ToList();
+            var snappedPointsList = snappedPointsWithElevationDb.Select(i=>i.ToSnappedPointWithElevation()).ToList();
 
             await Navigation.PushAsync(new MapPage(snappedPointsList), true);
         }

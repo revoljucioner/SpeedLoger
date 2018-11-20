@@ -39,7 +39,7 @@ namespace Log.Pages
             //if (snappedPointsDb.Length<2)
             //    throw new NotImplementedException();
             //_snappedPointsList = snappedPointsDb.Select(i=>i.ToSnappedPoint()).ToList();
-            _snappedPointsWithElevationList = _snappedPointsWithElevationList;
+            _snappedPointsWithElevationList = snappedPointsList;
 
             customMap.PolylineSegmentList = _snappedPointsWithElevationList.ToPolylineSegmentList();
 
