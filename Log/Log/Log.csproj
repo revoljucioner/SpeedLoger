@@ -25,4 +25,8 @@
       <HintPath>..\..\..\..\..\Downloads\System.Device\System.Device.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Telephony\" />
+  </ItemGroup>
 </Project>

@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidDevice .cs" />
+    <Compile Include="CellListener.cs" />
     <Compile Include="CustomMapRenderer .cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

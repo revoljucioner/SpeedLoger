@@ -16,7 +16,9 @@ namespace Log.Pages
         private int _snappedPointsCount = 0;
         // meters
         readonly ILocator _locator;
+        private ICellAnalyzer _cellListener;
         private Position _previousPosition = new Position(0, 0);
+        private string _simSerialNumber;
 
         public RecordPage()
         {
@@ -27,6 +29,10 @@ namespace Log.Pages
             startTime.Text = _startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
             _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
+            //
+            _cellListener = DependencyService.Get<ICellAnalyzer>();
+            _simSerialNumber = _cellListener.GetSimSerialNumber();
+            //
             _locator.StartListening(CrossGeolocator_Current_PositionChanged);
 
             _track.StartDateTime = _startTimeConst;

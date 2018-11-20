@@ -17,17 +17,13 @@ namespace Log.Droid
             _telephonyManager = (TelephonyManager)Forms.Context.GetSystemService(Context.TelephonyService);
         }
 
-        public int GetGsmSignalStrength()
+        public string GetSimSerialNumber()
         {
-            ConnectivityManager cm = (ConnectivityManager)Forms.Context.GetSystemService(Context.ConnectivityService);
-            var y = cm.ActiveNetworkInfo;
-            //
-            TelecomManager cm2 = (TelecomManager)Forms.Context.GetSystemService(Context.TelecomService);
-            //var y2 = cm2.IsInManagedCall;
-            //
-            var gsmSignalStrength = _telephonyManager.SignalStrength.GsmSignalStrength;
-            //var ttt2 = ttt.GsmSignalStrength;
-            return gsmSignalStrength;
+            //ConnectivityManager cm = (ConnectivityManager)Forms.Context.GetSystemService(Context.ConnectivityService);
+            //TelecomManager cm2 = (TelecomManager)Forms.Context.GetSystemService(Context.TelecomService);
+
+            var simSerialNumber = _telephonyManager.SimSerialNumber;
+            return simSerialNumber;
         }
     }
 }
