@@ -34,7 +34,7 @@ namespace Log.Services.Controllers
                     Encoding.UTF8, "application/json"));
 
             if (response.StatusCode != HttpStatusCode.OK)
-                return null;
+                throw new Exception(response.Content.ToString());
 
             var contentString = await response.Content.ReadAsStringAsync();
             SpeedModel value = null;
@@ -42,8 +42,9 @@ namespace Log.Services.Controllers
             {
                 value = JsonConvert.DeserializeObject<SpeedModel>(contentString);
             }
-            catch (Exception EX_NAME)
+            catch (Exception exception)
             {
+                throw new Exception("Server return wrong data. Please, try later.");
             }
             return value;
         }

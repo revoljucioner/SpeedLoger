@@ -22,9 +22,6 @@ namespace Log.Locators
         {
             if (CrossGeolocator.Current.IsListening)
                 return;
-            // TODO:
-            // просмотреть все эти параметры
-            // выглядит так будто класс ListenerSettings можно удалить
             await CrossGeolocator.Current.StartListeningAsync(_minimumTime, _minimumDistance, false);
 
             CrossGeolocator.Current.PositionChanged += eventMethod;

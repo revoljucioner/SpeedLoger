@@ -17,14 +17,14 @@ namespace Log.Pages
         public RecordsListPage()
         {
             InitializeComponent();
-            trackList = App.Database.GetItems().Where(i=>i.StatusActive).Select(i => i.ToTrackListItem()).ToList();
+            trackList = App.Database.GetItems().Where(i => i.StatusActive).Select(i => i.ToTrackListItem()).ToList();
             recordsList.ItemsSource = trackList;
         }
 
         private async Task<SpeedModel> DecodeTrack(int trackId)
         {
             var snappedPoints = App.SnappedPointDatabase.GetItemsByTrackId(trackId);
-            var snappedPointRequestArray = snappedPoints.Select(i=>i.ToSnappedPointRequest());
+            var snappedPointRequestArray = snappedPoints.Select(i => i.ToSnappedPointRequest());
             var speedModelDecoded = await _speedServerService.GetSnappedPointsArrayFromSpeedServer(snappedPointRequestArray);
 
             return speedModelDecoded;
@@ -46,10 +46,18 @@ namespace Log.Pages
         private async void OnOpenClicked(object sender, EventArgs e)
         {
             var trackId = GetIdFromSenderButton(sender);
-
+            SpeedModel speedModel;
             if (!App.Database.GetItem(trackId).Decoded)
             {
-                var speedModel = await DecodeTrack(trackId);
+                try
+                {
+                    speedModel = await DecodeTrack(trackId);
+                }
+                catch (Exception exception)
+                {
+                    await DisplayAlert("Error", exception.Message, "OK");
+                    return;
+                }
                 var snappedPointsWithElevation = speedModel.snappedPoints.Select(i => (i.ToSnappedPointWithElevation()));
                 var snappedPointsWithElevationDb = snappedPointsWithElevation.Select(i => i.ToSnappedPointsWithElevationDb(trackId));
                 App.DecodedSnappedPointsDatabase.SaveItems(snappedPointsWithElevationDb);
@@ -74,6 +82,10 @@ namespace Log.Pages
                 App.Database.DeleteItem(trackId);
                 App.SnappedPointDatabase.DeleteItemsByTrackId(trackId);
             }
+            //recordsList.BeginRefresh();
+            trackList.Remove(trackList.Where(i => i.Id == trackId).Single());
+            //recordsList.EndRefresh();
+            recordsList.ItemsSource = trackList;
         }
 
         #endregion
