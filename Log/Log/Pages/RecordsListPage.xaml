@@ -21,5 +21,8 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
+		<AbsoluteLayout>
+			<ActivityIndicator x:Name="loader" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center"/>
+		</AbsoluteLayout>
 	</StackLayout>
 </ContentPage>

@@ -61,6 +61,7 @@ namespace Log
 
 		    InitializeComponent();
             MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new CarouselPage2());
             //MainPage = new NavigationPage(new MainPageCarousel2());
 
             // For testing:

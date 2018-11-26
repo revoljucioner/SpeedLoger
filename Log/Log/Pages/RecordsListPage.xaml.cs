@@ -17,6 +17,7 @@ namespace Log.Pages
         public RecordsListPage()
         {
             InitializeComponent();
+            IsBusy = false;
             trackList = App.Database.GetItems().Where(i => i.StatusActive).Select(i => i.ToTrackListItem()).ToList();
             recordsList.ItemsSource = trackList;
         }
@@ -43,9 +44,24 @@ namespace Log.Pages
 
         #region activities
 
-        private async void OnOpenClicked(object sender, EventArgs e)
+        private void OnOpenClicked(object sender, EventArgs e)
         {
+            TurnOnLoader();
+            Task.Delay(3000);
             var trackId = GetIdFromSenderButton(sender);
+            Afff(trackId);
+        }
+
+        private void TurnOnLoader()
+        {
+            IsBusy = true;
+            loader.IsEnabled = true;
+            loader.IsVisible = true;
+            loader.IsRunning = true;
+        }
+
+        private async void Afff(int trackId)
+        {
             SpeedModel speedModel;
             if (!App.Database.GetItem(trackId).Decoded)
             {
