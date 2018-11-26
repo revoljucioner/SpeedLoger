@@ -1,5 +1,4 @@
-﻿using System;
-using Log.Models;
+﻿using Log.Models;
 
 namespace Log.DependenciesOS
 {

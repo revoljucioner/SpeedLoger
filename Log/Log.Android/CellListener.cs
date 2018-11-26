@@ -38,10 +38,5 @@ namespace Log.Droid
 
             return cellDataEntity;
         }
-
-        public string GetAllCellData()
-        {
-            return _telephonyManager.SimSerialNumber;
-        }
     }
 }
