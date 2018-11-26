@@ -36,7 +36,8 @@ namespace Log.Models
         public SnappedPointRequest ToSnappedPointRequest()
         {
             var location = new Location(Latitude, Longitude);
-            var snappedPointRequest = new SnappedPointRequest { Location = location, time = Time };
+            var cellData = new CellData{Cid = Cid, CellSignalStrength = CellSignalStrength};
+            var snappedPointRequest = new SnappedPointRequest { Location = location, time = Time, CellData = cellData };
             return snappedPointRequest;
         }
     }
