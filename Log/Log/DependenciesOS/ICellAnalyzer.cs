@@ -1,8 +1,9 @@
-﻿namespace Log.DependenciesOS
+﻿using Log.Models;
+
+namespace Log.DependenciesOS
 {
     public interface ICellAnalyzer
     {
-        string GetSimSerialNumber();
-        //string GetImei();
+        CellData GetCellData();
     }
 }

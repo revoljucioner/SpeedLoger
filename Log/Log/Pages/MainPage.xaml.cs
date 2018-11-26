@@ -1,12 +1,15 @@
 ﻿using System;
+using Log.DependenciesOS;
 using Xamarin.Forms;
 
 namespace Log.Pages
 {
     public partial class MainPage : CarouselPage
     {
+        private IPermissionsResolver _permissionsResolver;
         public MainPage()
         {
+            _permissionsResolver = DependencyService.Get<IPermissionsResolver>();
             InitializeComponent();
         }
 
@@ -14,6 +17,8 @@ namespace Log.Pages
 
         private async void StackLayoutStartRecord_Clicked(object sender, EventArgs e)
         {
+            _permissionsResolver.RequestLocationPermissions();
+            _permissionsResolver.RequestPhonePermissions();
             await Navigation.PushAsync(new RecordPage(), true);
         }
 

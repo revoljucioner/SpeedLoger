@@ -1,29 +1,42 @@
-﻿using Android.Content;
-using Android.Net;
-using Android.Telecom;
+﻿using System.Linq;
+using Android.Content;
 using Android.Telephony;
 using Log.DependenciesOS;
 using Log.Droid;
+using Log.Models;
 using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency(typeof(CellListener))]
 namespace Log.Droid
 {
-    public class CellListener :ICellAnalyzer
+    public class CellListener : ICellAnalyzer
     {
-        private TelephonyManager _telephonyManager;
+        private readonly TelephonyManager _telephonyManager;
+
         public CellListener()
         {
             _telephonyManager = (TelephonyManager)Forms.Context.GetSystemService(Context.TelephonyService);
         }
 
-        public string GetSimSerialNumber()
+        public CellData GetCellData()
         {
-            //ConnectivityManager cm = (ConnectivityManager)Forms.Context.GetSystemService(Context.ConnectivityService);
-            //TelecomManager cm2 = (TelecomManager)Forms.Context.GetSystemService(Context.TelecomService);
+            var currentCellInfo = _telephonyManager.AllCellInfo.First();
+            var cellDataEntity = new CellData();
 
-            var simSerialNumber = _telephonyManager.SimSerialNumber;
-            return simSerialNumber;
+            if (currentCellInfo is CellInfoWcdma)
+            {
+                var a = (CellInfoWcdma) currentCellInfo;
+                cellDataEntity.Cid = a.CellIdentity.Cid;
+                cellDataEntity.CellSignalStrength = a.CellSignalStrength.Dbm;
+            }
+            else if (currentCellInfo is CellInfoGsm)
+            {
+                var a = (CellInfoGsm) currentCellInfo;
+                cellDataEntity.Cid = a.CellIdentity.Cid;
+                cellDataEntity.CellSignalStrength = a.CellSignalStrength.Dbm;
+            }
+
+            return cellDataEntity;
         }
     }
 }

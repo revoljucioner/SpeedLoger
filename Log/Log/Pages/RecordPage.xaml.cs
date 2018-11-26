@@ -18,7 +18,6 @@ namespace Log.Pages
         readonly ILocator _locator;
         private ICellAnalyzer _cellListener;
         private Position _previousPosition = new Position(0, 0);
-        private string _simSerialNumber;
 
         public RecordPage()
         {
@@ -28,12 +27,10 @@ namespace Log.Pages
 
             startTime.Text = _startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
-            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 5);
-            //
-            _cellListener = DependencyService.Get<ICellAnalyzer>();
-            _simSerialNumber = _cellListener.GetSimSerialNumber();
-            //
+            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
             _locator.StartListening(CrossGeolocator_Current_PositionChanged);
+
+            _cellListener = DependencyService.Get<ICellAnalyzer>();
 
             _track.StartDateTime = _startTimeConst;
 
@@ -56,13 +53,17 @@ namespace Log.Pages
 
                 if ((positionGeolocator.Latitude != _previousPosition.Latitude) || (positionGeolocator.Longitude != _previousPosition.Longitude))
                 {
+                    var cellData = _cellListener.GetCellData();
+
                     var snappedPointDb =
                         new SnappedPointDb
                         {
                             TrackId = _track.Id,
                             Latitude = positionGeolocator.Latitude,
                             Longitude = positionGeolocator.Longitude,
-                            Time = positionGeolocator.Timestamp.UtcDateTime
+                            Time = positionGeolocator.Timestamp.UtcDateTime,
+                            Cid = cellData.Cid,
+                            CellSignalStrength = cellData.CellSignalStrength
                         };
                     App.SnappedPointDatabase.SaveItem(snappedPointDb);
                     _snappedPointsCount += 1;
