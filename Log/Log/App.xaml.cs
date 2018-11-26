@@ -3,6 +3,7 @@ using Log.Helpers;
 using Log.Models;
 using Log.Pages;
 using Log.TestData;
+using Log.Views;
 using Xamarin.Forms;
 
 namespace Log
@@ -60,7 +61,9 @@ namespace Log
 		    //});
 
 		    InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new MainPage());
+		    MainPage = new NavigationPage(new FriendsListPage());
+
             //MainPage = new NavigationPage(new CarouselPage2());
             //MainPage = new NavigationPage(new MainPageCarousel2());
 

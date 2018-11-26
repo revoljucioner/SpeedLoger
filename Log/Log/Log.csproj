@@ -31,4 +31,31 @@
       <HintPath>..\..\..\..\..\Downloads\System.Device\System.Device.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\FriendPage .xaml.cs">
+      <DependentUpon>FriendPage .xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FriendsListPage .xaml.cs">
+      <DependentUpon>FriendsListPage .xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\MapPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\RecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Pages\RecordsListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
 </Project>
