@@ -18,7 +18,6 @@ namespace Log.Pages
         readonly ILocator _locator;
         private ICellAnalyzer _cellListener;
         private Position _previousPosition = new Position(0, 0);
-        private string _simSerialNumber;
 
         public RecordPage()
         {
@@ -31,7 +30,7 @@ namespace Log.Pages
             _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 1);
             //
             _cellListener = DependencyService.Get<ICellAnalyzer>();
-            _simSerialNumber = _cellListener.GetSimSerialNumber();
+            //_cellData = _cellListener.GetCellData();
             //
             _locator.StartListening(CrossGeolocator_Current_PositionChanged);
 
@@ -56,13 +55,17 @@ namespace Log.Pages
 
                 if ((positionGeolocator.Latitude != _previousPosition.Latitude) || (positionGeolocator.Longitude != _previousPosition.Longitude))
                 {
+                    var cellData = _cellListener.GetCellData();
+
                     var snappedPointDb =
                         new SnappedPointDb
                         {
                             TrackId = _track.Id,
                             Latitude = positionGeolocator.Latitude,
                             Longitude = positionGeolocator.Longitude,
-                            Time = positionGeolocator.Timestamp.UtcDateTime
+                            Time = positionGeolocator.Timestamp.UtcDateTime,
+                            Cid = cellData.Cid,
+                            CellSignalStrength = cellData.CellSignalStrength
                         };
                     App.SnappedPointDatabase.SaveItem(snappedPointDb);
                     _snappedPointsCount += 1;

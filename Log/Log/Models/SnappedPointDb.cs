@@ -14,6 +14,8 @@ namespace Log.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public DateTime Time { get; set; }
+        public int Cid { get; set; }
+        public int CellSignalStrength { get; set; }
 
         public SnappedPointDb()
         {

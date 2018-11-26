@@ -1,7 +1,10 @@
-﻿namespace Log.DependenciesOS
+﻿using System;
+using Log.Models;
+
+namespace Log.DependenciesOS
 {
     public interface ICellAnalyzer
     {
-        string GetSimSerialNumber();
+        CellData GetCellData();
     }
 }
