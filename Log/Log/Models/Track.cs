@@ -7,7 +7,6 @@ namespace Log.Models
     public class Track
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
-        //[PrimaryKey, Column("_id")]
         public int Id { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Log.DependenciesOS;
+using Log.Views;
 using Xamarin.Forms;
 
 namespace Log.Pages
@@ -25,6 +26,7 @@ namespace Log.Pages
         private async void StackLayoutOpenRecordslistPage_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RecordsListPage(), true);
+            await Navigation.PushAsync(new TracksListPage(), true);
         }
 
         private async void StackLayoutStartSettings_Clicked(object sender, EventArgs e)

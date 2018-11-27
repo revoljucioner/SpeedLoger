@@ -2,11 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Name="MyNotifyPage"
-             x:Class="Log.Views.TracksListPage" Title="Список друзей">
+             x:Class="Log.Views.TracksListPage" Title="Records List">
 	<StackLayout>
-		<Button Text="Добавить" Command="{Binding CreateFriendCommand}" />
-		<ListView x:Name="booksList" ItemsSource="{Binding Tracks}"
-		          SelectedItem="{Binding SelectedFriend, Mode=TwoWay}" HasUnevenRows="True">
+		<ListView x:Name="booksList" ItemsSource="{Binding Tracks}" HasUnevenRows="True">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
@@ -14,10 +12,7 @@
 							<StackLayout>
 								<Label Text="{Binding Id}" FontSize="Medium" />
 								<Label Text="{Binding StartDateTime}" FontSize="Small" />
-								<!--<Button Text="X" BackgroundColor="Gray" HorizontalOptions="End" Clicked="{Binding DeleteTrackCommand}" />-->
 								<Button Text="Remove" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference MyNotifyPage}, Path=BindingContext.DeleteTrackCommand}"/>
-								<!--<Button Text="X" BackgroundColor="Gray" CommandParameter="{Binding .}"  HorizontalOptions="End" Clicked="{Binding DeleteTrackCommand}" />-->
-								<!--<Label Text="{Binding Phone}" FontSize="Small" />-->
 							</StackLayout>
 						</ViewCell.View>
 					</ViewCell>

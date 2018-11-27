@@ -2,13 +2,11 @@
 using Android;
 using Android.App;
 using Android.Content.PM;
-using Android.Net;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Log.DependenciesOS;
 using Log.Droid;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 [assembly: Xamarin.Forms.Dependency(typeof(PermissionsResolver))]
 namespace Log.Droid

@@ -11,11 +11,6 @@ namespace Log.ViewModels
 
         public Track Track { get; private set; }
 
-        public TrackViewModel()
-        {
-            Track = new Track();
-        }   
-
         public TrackViewModel(Track track)
         {
             Track = track;
@@ -47,7 +42,10 @@ namespace Log.ViewModels
         }
         public DateTime StartDateTime
         {
-            get { return Track.StartDateTime; }
+            get
+            {
+                return Track.StartDateTime;
+            }
             set
             {
                 if (Track.StartDateTime != value)
@@ -58,20 +56,19 @@ namespace Log.ViewModels
             }
         }
 
-        //public bool IsValid
-        //{
-        //    get
-        //    {
-        //        return ((!string.IsNullOrEmpty(Name.Trim())) ||
-        //            (!string.IsNullOrEmpty(Phone.Trim())) ||
-        //            (!string.IsNullOrEmpty(Email.Trim())));
-        //    }
-        //}
+        public string Duration
+        {
+            get
+            {
+                var timeSpan = Track.EndDateTime.Subtract(Track.StartDateTime);
+                var str = timeSpan.ToString("HH:mm:ss.fff");
+                return str;
+            }
+        }
 
         protected void OnPropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

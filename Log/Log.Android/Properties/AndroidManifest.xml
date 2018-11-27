@@ -11,6 +11,6 @@
 	<uses-permission android:name="android.permission.CALL_PHONE" />
 	<uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
 	<application android:label="Speedloger">
-		<meta-data android:name="com.google.android.geo.API_KEY" android:value="API_KEY" />
+		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAKAnsBhmAZCXLGW65jzgLItk4DmXkuMt4" />
 	</application>
 </manifest>
