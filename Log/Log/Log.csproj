@@ -33,14 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\FriendPage .xaml.cs">
-      <DependentUpon>FriendPage .xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\TracksListPage.xaml.cs">
       <DependentUpon>TracksListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\FriendsListPage .xaml.cs">
-      <DependentUpon>FriendsListPage .xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

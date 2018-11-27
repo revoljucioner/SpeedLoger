@@ -12,16 +12,5 @@ namespace Log.Models
         public DateTime EndDateTime { get; set; }
         public bool StatusActive { get; set; }
         public bool Decoded { get; set; }
-
-        public TrackListItem ToTrackListItem()
-        {
-            var trackListItem = new TrackListItem();
-            trackListItem.Id = Id;
-            trackListItem.StartDateTime = StartDateTime;
-            trackListItem.EndDateTime = EndDateTime;
-
-            return trackListItem;
-        }
-
     }
 }
