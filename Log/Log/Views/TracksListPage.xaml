@@ -5,11 +5,20 @@
              x:Class="Log.Views.TracksListPage" Title="Records List">
 	<StackLayout>
 		<ListView x:Name="booksList" ItemsSource="{Binding Tracks}" HasUnevenRows="True">
+			<ListView.Header>
+				<StackLayout Orientation="Horizontal">
+					<Label Text="Id" FontSize="Small"/>
+					<Label Text="StartDate/StartTime" FontSize="Small"/>
+					<Label Text="Duration" FontSize="Small" HorizontalOptions="FillAndExpand"/>
+					<Label Text="Open Track" FontSize="Small"/>
+					<Label Text="Delete Track" FontSize="Small"/>
+				</StackLayout>
+			</ListView.Header>
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
 						<ViewCell.View>
-							<StackLayout Orientation="Horizontal">
+							<StackLayout Orientation="Horizontal" Padding="10">
 								<Label Text="{Binding Id}" FontSize="Small" />
 								<StackLayout Orientation="Vertical">
 									<Label Text="{Binding StartDate}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
