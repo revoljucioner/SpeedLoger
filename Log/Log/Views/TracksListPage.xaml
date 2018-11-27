@@ -9,10 +9,15 @@
 				<DataTemplate>
 					<ViewCell>
 						<ViewCell.View>
-							<StackLayout>
-								<Label Text="{Binding Id}" FontSize="Medium" />
-								<Label Text="{Binding StartDateTime}" FontSize="Small" />
-								<Button Text="Remove" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference MyNotifyPage}, Path=BindingContext.DeleteTrackCommand}"/>
+							<StackLayout Orientation="Horizontal">
+								<Label Text="{Binding Id}" FontSize="Small" />
+								<StackLayout Orientation="Vertical">
+									<Label Text="{Binding StartDate}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
+									<Label Text="{Binding StartTime}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
+								</StackLayout>
+								<Label Text="{Binding Duration}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
+								<Button Text="Open" FontSize="Small" HorizontalOptions="End" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference MyNotifyPage}, Path=BindingContext.OpenTrackCommand}"/>
+								<Button Text="X" FontSize="Small" HorizontalOptions="End" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference MyNotifyPage}, Path=BindingContext.DeleteTrackCommand}"/>
 							</StackLayout>
 						</ViewCell.View>
 					</ViewCell>

@@ -25,7 +25,7 @@ namespace Log.Pages
 
         private async void StackLayoutOpenRecordslistPage_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RecordsListPage(), true);
+            //await Navigation.PushAsync(new RecordsListPage(), true);
             await Navigation.PushAsync(new TracksListPage(), true);
         }
 

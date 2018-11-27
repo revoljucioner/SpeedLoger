@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Log.Extensions;
 using Log.Models;
 
 namespace Log.ViewModels
@@ -28,40 +29,17 @@ namespace Log.ViewModels
                 }
             }
         }
-        public int Id
-        {
-            get { return Track.Id; }
-            set
-            {
-                if (Track.Id != value)
-                {
-                    Track.Id = value;
-                    OnPropertyChanged("Id");
-                }
-            }
-        }
-        public DateTime StartDateTime
-        {
-            get
-            {
-                return Track.StartDateTime;
-            }
-            set
-            {
-                if (Track.StartDateTime != value)
-                {
-                    Track.StartDateTime = value;
-                    OnPropertyChanged("StartDateTime");
-                }
-            }
-        }
+        public int Id => Track.Id;
+
+        public string StartDate => Track.StartDateTime.ToShortDateString();
+        public string StartTime => Track.StartDateTime.ToLongTimeString();
 
         public string Duration
         {
             get
             {
                 var timeSpan = Track.EndDateTime.Subtract(Track.StartDateTime);
-                var str = timeSpan.ToString("HH:mm:ss.fff");
+                var str = timeSpan.ToReadableString();
                 return str;
             }
         }

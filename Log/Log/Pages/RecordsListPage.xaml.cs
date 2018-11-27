@@ -81,43 +81,6 @@ namespace Log.Pages
             await Navigation.PushAsync(new MapPage(snappedPointsList), true);
         }
 
-        private void TurnOnLoader()
-        {
-            IsBusy = true;
-            loader.IsEnabled = true;
-            loader.IsVisible = true;
-            loader.IsRunning = true;
-        }
-
-        private async void Afff(int trackId)
-        {
-            SpeedModel speedModel;
-            if (!App.Database.GetItem(trackId).Decoded)
-            {
-                try
-                {
-                    speedModel = await DecodeTrack(trackId);
-                }
-                catch (Exception exception)
-                {
-                    await DisplayAlert("Error", exception.Message, "OK");
-                    return;
-                }
-                var snappedPointsWithElevation = speedModel.snappedPoints.Select(i => (i.ToSnappedPointWithElevation()));
-                var snappedPointsWithElevationDb = snappedPointsWithElevation.Select(i => i.ToSnappedPointsWithElevationDb(trackId));
-                App.DecodedSnappedPointsDatabase.SaveItems(snappedPointsWithElevationDb);
-                App.Database.SetDecoded(trackId, true);
-            }
-
-            var snappedPointsWithElevationFromDb = App.DecodedSnappedPointsDatabase.GetItemsByTrackId(trackId).OrderBy(i => i.Time);
-
-            if (snappedPointsWithElevationFromDb.Count() < 2)
-                throw new NotImplementedException();
-            var snappedPointsList = snappedPointsWithElevationFromDb.Select(i => i.ToSnappedPointWithElevation()).ToList();
-
-            await Navigation.PushAsync(new MapPage(snappedPointsList), true);
-        }
-
         private async void OnDeleteClicked(object sender, EventArgs e)
         {
             var trackId = GetIdFromSenderButton(sender);

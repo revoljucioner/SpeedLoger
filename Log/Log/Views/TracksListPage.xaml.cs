@@ -8,7 +8,7 @@ namespace Log.Views
         public TracksListPage()
         {
             InitializeComponent();
-            BindingContext = new TracksListViewModel() { Navigation = this.Navigation };
+            BindingContext = new TracksListViewModel(this) { Navigation = this.Navigation };
         }
     }
 }
