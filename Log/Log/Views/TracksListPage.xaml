@@ -6,27 +6,44 @@
 	<StackLayout>
 		<ListView x:Name="TracksList" ItemsSource="{Binding Tracks}" HasUnevenRows="True">
 			<ListView.Header>
-				<StackLayout Orientation="Horizontal">
-					<Label Text="Id" FontSize="Small"/>
-					<Label Text="StartDate/StartTime" FontSize="Small"/>
-					<Label Text="Duration" FontSize="Small" HorizontalOptions="FillAndExpand"/>
-					<Label Text="Open Track" FontSize="Small"/>
-					<Label Text="Delete Track" FontSize="Small"/>
+				<StackLayout Orientation="Horizontal" Padding="5" BackgroundColor = "LightSteelBlue">
+					<Grid>
+						<Grid.ColumnDefinitions >
+							<ColumnDefinition Width ="1*"/>
+							<ColumnDefinition Width ="3.5*"/>
+							<ColumnDefinition Width ="3*"/>
+							<ColumnDefinition Width ="4.5*"/>
+						</Grid.ColumnDefinitions >
+						<Label Text="Id" FontSize="Small" Grid.Column="0"/>
+						<Label Text="StartDate/StartTime" FontSize="Small" Grid.Column="1"/>
+						<Label Text="Duration" FontSize="Small" Grid.Column="2"/>
+						<Label Text="Actions" HorizontalOptions="Center" FontSize="Small" Grid.Column="3"/>
+					</Grid >
 				</StackLayout>
 			</ListView.Header>
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
 						<ViewCell.View>
-							<StackLayout Orientation="Horizontal" Padding="10">
-								<Label Text="{Binding Id}" FontSize="Small" />
-								<StackLayout Orientation="Vertical">
-									<Label Text="{Binding StartDate}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
-									<Label Text="{Binding StartTime}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
-								</StackLayout>
-								<Label Text="{Binding Duration}" FontSize="Small" HorizontalOptions="FillAndExpand"/>
-								<Button Text="Open" FontSize="Small" HorizontalOptions="End" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference TracksListPageName}, Path=BindingContext.OpenTrackCommand}"/>
-								<Button Text="X" FontSize="Small" HorizontalOptions="End" CommandParameter="{Binding .}" Command="{Binding Source={x:Reference TracksListPageName}, Path=BindingContext.DeleteTrackCommand}"/>
+							<StackLayout Orientation="Horizontal" Padding="5">
+								<Grid>
+									<Grid.ColumnDefinitions >
+										<ColumnDefinition Width ="1*"/>
+										<ColumnDefinition Width ="3.5*"/>
+										<ColumnDefinition Width ="3*"/>
+										<ColumnDefinition Width ="2.5*"/>
+										<ColumnDefinition Width ="2*"/>
+									</Grid.ColumnDefinitions >
+
+									<Label Text="{Binding Id}" FontSize="Small" Grid.Column="0"/>
+									<StackLayout Orientation="Vertical" Grid.Column="1">
+										<Label Text="{Binding StartDate}" FontSize="Small" />
+										<Label Text="{Binding StartTime}" FontSize="Small" />
+									</StackLayout>
+									<Label Text="{Binding Duration}" FontSize="Small"  Grid.Column="2"/>
+									<Button Text="Open" Grid.Column="3" FontSize="Micro"  CommandParameter="{Binding .}" Command="{Binding Source={x:Reference TracksListPageName}, Path=BindingContext.OpenTrackCommand}"/>
+									<Button Text="X" Grid.Column="4" FontSize="Micro"  CommandParameter="{Binding .}" Command="{Binding Source={x:Reference TracksListPageName}, Path=BindingContext.DeleteTrackCommand}"/>
+								</Grid >
 							</StackLayout>
 						</ViewCell.View>
 					</ViewCell>

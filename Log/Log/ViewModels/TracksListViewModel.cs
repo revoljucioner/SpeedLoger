@@ -17,7 +17,7 @@ namespace Log.ViewModels
 
         private SpeedServerService _speedServerService = new SpeedServerService();
         public event PropertyChangedEventHandler PropertyChanged;
-        private Page _page; 
+        private readonly Page _page; 
 
         public ICommand DeleteTrackCommand { protected set; get; }
         public ICommand BackCommand { protected set; get; }
@@ -28,6 +28,7 @@ namespace Log.ViewModels
         {
             if (page==null)
                 throw new Exception();
+            _page = page;
             var tracks = App.Database.GetItems().Where(i => i.StatusActive);
             var trackViewModels = tracks.Select(i => new TrackViewModel(i));
             Tracks = new ObservableCollection<TrackViewModel>(trackViewModels);
