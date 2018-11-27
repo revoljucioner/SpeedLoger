@@ -29,6 +29,11 @@ namespace Log.Droid
             Manifest.Permission.ReadPhoneState
         };
 
+        private readonly string[] _permissionsInternet =
+        {
+            Manifest.Permission.Internet
+        };
+
         #endregion
 
         public void RequestLocationPermissions()
@@ -39,6 +44,11 @@ namespace Log.Droid
         public void RequestPhonePermissions()
         {
             SetPermissions(_permissionsPhone, Permission.Granted);
+        }
+
+        public void RequestInternetPermissions()
+        {
+            SetPermissions(_permissionsInternet, Permission.Granted);
         }
 
         #region Helpers

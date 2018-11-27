@@ -4,5 +4,6 @@
     {
         void RequestLocationPermissions();
         void RequestPhonePermissions();
+        void RequestInternetPermissions();
     }
 }

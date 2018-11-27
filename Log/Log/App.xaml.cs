@@ -61,8 +61,8 @@ namespace Log
 		    //});
 
 		    InitializeComponent();
-            //MainPage = new NavigationPage(new MainPage());
-		    MainPage = new NavigationPage(new TracksListPage());
+            MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new TracksListPage());
 
             //MainPage = new NavigationPage(new CarouselPage2());
             //MainPage = new NavigationPage(new MainPageCarousel2());
