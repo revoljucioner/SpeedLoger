@@ -1,4 +1,5 @@
 ﻿using Log.DB;
+using Log.DependenciesOS;
 using Log.Helpers;
 using Log.Models;
 using Log.Pages;
@@ -16,6 +17,7 @@ namespace Log
         public static TrackRepository database;
 	    public static SnappedPointRepository snappedPointDatabase;
 	    public static DecodedSnappedPointsDb decodedSnappedPointsDb;
+	    public static IPermissionsResolver PermissionsResolver;
 
         public static TrackRepository Database
         {
@@ -55,12 +57,13 @@ namespace Log
 
         public App ()
 		{
-		    //AutoMapper.Mapper.Initialize(cfg => {
-		    //    cfg.CreateMap<SnappedPointWithElevation, SnappedPointWithElevationDb>();
-		    //    /* etc */
+            //AutoMapper.Mapper.Initialize(cfg => {
+            //    cfg.CreateMap<SnappedPointWithElevation, SnappedPointWithElevationDb>();
+            //    /* etc */
 		    //});
-
-		    InitializeComponent();
+		    PermissionsResolver = DependencyService.Get<IPermissionsResolver>();
+            InitializeComponent();
+            //MainPage = new NavigationPage(new MainPage());
             MainPage = new NavigationPage(new MainPage());
             //MainPage = new NavigationPage(new TracksListPage());
 
