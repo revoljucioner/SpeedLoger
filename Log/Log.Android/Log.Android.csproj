@@ -93,7 +93,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndroidDevice .cs" />
     <Compile Include="CloseApplication.cs" />
     <Compile Include="PermissionsResolver.cs" />
     <Compile Include="CellListener.cs" />

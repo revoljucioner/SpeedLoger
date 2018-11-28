@@ -27,8 +27,6 @@ namespace Log.Droid
             var assembly = Assembly.Load(cv.FullName);
 
             LoadApplication(new App());
-
-            //TextView button = FindViewById<TextView>(Resource.Id.LocationText);
         }
     }
 }
