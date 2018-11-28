@@ -9,36 +9,45 @@ namespace Log.Pages
     {
         public MainPage()
         {
-
-
             InitializeComponent();
 
-            StackLayoutStartRecord.GestureRecognizers.Add(
-                new TapGestureRecognizer()
-                {
-                    Command = new Command(StackLayoutStartRecord_Clicked)
-                });
+            AddGestureRecognizer(StackLayoutStartRecord, StackLayoutStartRecord_Clicked);
+            AddGestureRecognizer(StackLayoutOpenRecordslistPage, StackLayoutOpenRecordslistPage_Clicked);
+            AddGestureRecognizer(StackLayoutStartSettings, StackLayoutStartSettings_Clicked);
+            AddGestureRecognizer(StackLayoutExit, StackLayoutExit_Clicked);
+        }
 
-            StackLayoutOpenRecordslistPage.GestureRecognizers.Add(
+        private void AddGestureRecognizer(StackLayout stackLayout, Action action)
+        {
+            stackLayout.GestureRecognizers.Add(
                 new TapGestureRecognizer()
                 {
-                    Command = new Command(StackLayoutOpenRecordslistPage_Clicked)
-                });
-
-            StackLayoutStartSettings.GestureRecognizers.Add(
-                new TapGestureRecognizer()
-                {
-                    Command = new Command(StackLayoutStartSettings_Clicked)
-                });
-
-            StackLayoutExit.GestureRecognizers.Add(
-                new TapGestureRecognizer()
-                {
-                    Command = new Command(StackLayoutExit_Clicked)
+                    Command = new Command(action)
                 });
         }
 
-        #region activities
+        private async void StackLayoutStartRecord_Clicked(object sender, EventArgs e)
+        {
+            StackLayoutStartRecord_Clicked();
+        }
+
+        private async void StackLayoutOpenRecordslistPage_Clicked(object sender, EventArgs e)
+        {
+            StackLayoutOpenRecordslistPage_Clicked();
+
+        }
+
+        private async void StackLayoutStartSettings_Clicked(object sender, EventArgs e)
+        {
+            StackLayoutStartSettings_Clicked();
+
+        }
+
+        private async void StackLayoutExit_Clicked(object sender, EventArgs e)
+        {
+            StackLayoutExit_Clicked();
+
+        }
 
         private async void StackLayoutStartRecord_Clicked()
         {
@@ -61,7 +70,5 @@ namespace Log.Pages
         {
             DependencyService.Get<ICloseApplication>().TerminateApplication();
         }
-
-        #endregion
     }
 }
