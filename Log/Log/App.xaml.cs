@@ -1,10 +1,6 @@
 ﻿using Log.DB;
 using Log.DependenciesOS;
-using Log.Helpers;
-using Log.Models;
 using Log.Pages;
-using Log.TestData;
-using Log.Views;
 using Xamarin.Forms;
 
 namespace Log
