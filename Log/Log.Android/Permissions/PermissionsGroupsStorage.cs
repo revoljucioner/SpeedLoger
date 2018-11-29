@@ -1,6 +1,8 @@
 ﻿using Android;
 using Log.DependenciesOS;
+using Log.Droid.Permissions;
 
+[assembly: Xamarin.Forms.Dependency(typeof(PermissionsGroupsStorage))]
 namespace Log.Droid.Permissions
 {
     public class PermissionsGroupsStorage: IPermissionsStorage

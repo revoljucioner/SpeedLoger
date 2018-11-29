@@ -2,8 +2,7 @@
 {
     public interface IPermissionsResolver
     {
-        void RequestLocationPermissions();
-        void RequestPhonePermissions();
-        void RequestInternetPermissions();
+        void SetPermissions(string[] permissions, bool permissionStatus);
+        bool IsAllPermissionsChecked(string[] permissions);
     }
 }
