@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Log.DependenciesOS;
 using Log.Views;
 using Xamarin.Forms;
@@ -51,9 +52,19 @@ namespace Log.Pages
 
         private async void StackLayoutStartRecord_Clicked()
         {
-            //App.PermissionsResolver.RequestLocationPermissions();
-            //App.PermissionsResolver.RequestPhonePermissions();
-            await Navigation.PushAsync(new RecordPage(), true);
+            var allPermissions = App.PermissionsStorage.PermissionsLocation.ToList();
+            allPermissions.AddRange(App.PermissionsStorage.PermissionsPhone.ToList());
+            var allPermissionsArray = allPermissions.ToArray();
+
+            if (!App.PermissionsResolver.IsAllPermissionsChecked(allPermissionsArray))
+            {
+                App.PermissionsResolver.SetPermissions(allPermissionsArray, true);
+                await DisplayAlert("Allow Permissions", "Before starting recording you must allow GPS and Phone Permissions! Application collect data about cell signal quality just to improve the quality of service.", "OK");
+            }
+            else
+            {
+                await Navigation.PushAsync(new RecordPage(), true);
+            }
         }
 
         private async void StackLayoutOpenRecordslistPage_Clicked()

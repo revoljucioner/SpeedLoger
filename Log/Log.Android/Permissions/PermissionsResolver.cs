@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.Support.V4.App;
@@ -21,10 +20,10 @@ namespace Log.Droid.Permissions
 
         public void SetPermissions(string[] permissions, bool permissionStatus)
         {
-            if (permissions.Length == 0)
-                return;
             var nativePermissionStatus = permissionStatus.ToAndroidPermission();
             var permissionsToChangeStatus = permissions.Where(i => IsPermissionCheck(i) != nativePermissionStatus).ToArray();
+            if (permissionsToChangeStatus.Length == 0)
+                return;
             ActivityCompat.RequestPermissions((Activity)Forms.Context, permissionsToChangeStatus, requestCode: 0);
         }
 

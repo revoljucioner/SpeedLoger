@@ -10,7 +10,7 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<gauge:SfCircularGauge VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
+		<gauge:SfCircularGauge VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10" Grid.Row="0">
 
 			<gauge:SfCircularGauge.Headers>
 				<gauge:Header Text="Speedometer" ForegroundColor="Black" TextSize="20" />
@@ -36,7 +36,8 @@
 
 		</gauge:SfCircularGauge>
 
-		<Button x:Name="buttonStop" Text="stop" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
+		<Label x:Name="DurationLabel" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
+		<Button x:Name="buttonStop" Text="stop" Grid.Row="2" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
 
 	</Grid>
 
