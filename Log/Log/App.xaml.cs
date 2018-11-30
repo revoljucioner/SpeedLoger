@@ -10,20 +10,21 @@ namespace Log
         public const string TracksUncode = "tracksUncode.db";
 	    public const string SnappedPointDatabasePath = "snappedPoints.db";
 	    public const string DecodedSnappedPointsDatabasePath = "decodedSnappedPoints.db";
-        public static TrackRepository database;
-	    public static SnappedPointRepository snappedPointDatabase;
-	    public static DecodedSnappedPointsDb decodedSnappedPointsDb;
-	    public static IPermissionsResolver PermissionsResolver;
+	    private static TrackRepository _database;
+	    private static SnappedPointRepository _snappedPointDatabase;
+	    private static DecodedSnappedPointsDb _decodedSnappedPointsDb;
+	    private static IPermissionsResolver _permissionsResolver;
+	    private static IPermissionsStorage _permissionsStorage;
 
         public static TrackRepository Database
         {
             get
             {
-                if (database == null)
+                if (_database == null)
                 {
-                    database = new TrackRepository(TracksUncode);
+                    _database = new TrackRepository(TracksUncode);
                 }
-                return database;
+                return _database;
             }
         }
 
@@ -31,11 +32,11 @@ namespace Log
         {
 	        get
 	        {
-	            if (snappedPointDatabase == null)
+	            if (_snappedPointDatabase == null)
 	            {
-	                snappedPointDatabase = new SnappedPointRepository(SnappedPointDatabasePath);
+	                _snappedPointDatabase = new SnappedPointRepository(SnappedPointDatabasePath);
 	            }
-	            return snappedPointDatabase;
+	            return _snappedPointDatabase;
 	        }
 	    }
 
@@ -43,11 +44,35 @@ namespace Log
         {
 	        get
 	        {
-	            if (decodedSnappedPointsDb == null)
+	            if (_decodedSnappedPointsDb == null)
 	            {
-	                decodedSnappedPointsDb = new DecodedSnappedPointsDb(DecodedSnappedPointsDatabasePath);
+	                _decodedSnappedPointsDb = new DecodedSnappedPointsDb(DecodedSnappedPointsDatabasePath);
 	            }
-	            return decodedSnappedPointsDb;
+	            return _decodedSnappedPointsDb;
+	        }
+	    }
+
+        public static IPermissionsResolver PermissionsResolver
+        {
+	        get
+	        {
+	            if (_permissionsResolver == null)
+	            {
+	                _permissionsResolver = DependencyService.Get<IPermissionsResolver>();
+	            }
+	            return _permissionsResolver;
+	        }
+	    }
+
+        public static IPermissionsStorage PermissionsStorage
+        {
+	        get
+	        {
+	            if (_permissionsStorage == null)
+	            {
+	                _permissionsStorage = DependencyService.Get<IPermissionsStorage>();
+	            }
+	            return _permissionsStorage;
 	        }
 	    }
 
@@ -57,7 +82,8 @@ namespace Log
             //    cfg.CreateMap<SnappedPointWithElevation, SnappedPointWithElevationDb>();
             //    /* etc */
 		    //});
-		    PermissionsResolver = DependencyService.Get<IPermissionsResolver>();
+		    //PermissionsResolver = DependencyService.Get<IPermissionsResolver>();
+		    //PermissionsStorage = DependencyService.Get<IPermissionsStorage>();
             InitializeComponent();
             //MainPage = new NavigationPage(new MainPage());
             MainPage = new NavigationPage(new MainPage());

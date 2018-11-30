@@ -98,7 +98,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloseApplication.cs" />
-    <Compile Include="PermissionsResolver.cs" />
+    <Compile Include="Permissions\PermissionsGroupsStorage.cs" />
+    <Compile Include="Permissions\PermissionsResolver.cs" />
     <Compile Include="CellListener.cs" />
     <Compile Include="CustomMapRenderer .cs" />
     <Compile Include="MainActivity.cs" />

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using Android.Locations;
 using Log.DependenciesOS;
 using Log.Locators;
 using Log.Models;
@@ -18,23 +21,61 @@ namespace Log.Pages
         readonly ILocator _locator;
         private ICellAnalyzer _cellListener;
         private Position _previousPosition = new Position(0, 0);
+        private IPermissionsResolver _permissionsResolver;
+        private IPermissionsStorage _permissionsStorage;
+        public string DurationLabelText;
 
         public RecordPage()
         {
-            _startTimeConst = DateTime.UtcNow;
+            var _permissionsResolver2 = DependencyService.Get<IPermissionsResolver>();
+
+
+            _permissionsResolver = App.PermissionsResolver;
+            _permissionsStorage = App.PermissionsStorage;
+
+            CheckPermissions();
+            StartDateTime = DateTime.UtcNow;
 
             InitializeComponent();
 
             //startTime.Text = _startTimeConst.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
-            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 0.5);
+            _locator = new LocatorPluginGeolocator(minimumTime: TimeSpan.FromMilliseconds(0.5), minimumDistance: 5);
             _locator.StartListening(CrossGeolocator_Current_PositionChanged);
 
             _cellListener = DependencyService.Get<ICellAnalyzer>();
 
-            _track.StartDateTime = _startTimeConst;
+            //_track.StartDateTime = _startTimeConst;
 
             _track.Id = SaveTrackToDb(_track);
+        }
+
+        private void CheckPermissions()
+        {
+            var aaa = _permissionsStorage.PermissionsLocation.ToList();
+            aaa.AddRange(_permissionsStorage.PermissionsPhone.ToList());
+
+            App.PermissionsResolver.SetPermissions(aaa.ToArray(), true);
+
+            App.PermissionsResolver.SetPermissions(App.PermissionsStorage.PermissionsLocation, true);
+            //
+            _permissionsResolver = App.PermissionsResolver;
+            _permissionsStorage = App.PermissionsStorage;
+            var requiredPermissions = new List<string>();
+            var pp = _permissionsResolver.IsAllPermissionsChecked(_permissionsStorage.PermissionsPhone);
+            var pl = _permissionsResolver.IsAllPermissionsChecked(_permissionsStorage.PermissionsLocation);
+            if (pl)
+            {
+                App.PermissionsResolver.SetPermissions(_permissionsStorage.PermissionsLocation, true);
+                requiredPermissions.Add("Location Permission");
+            }
+            if (pp)
+            {
+                App.PermissionsResolver.SetPermissions(_permissionsStorage.PermissionsPhone, true);
+                requiredPermissions.Add("Phone Permission");
+            }
+            if (!(pp & pl))
+                DurationLabelText = $"Please allow {requiredPermissions} permissions";
         }
 
         private int SaveTrackToDb(Track track)
@@ -44,6 +85,13 @@ namespace Log.Pages
 
         public void CrossGeolocator_Current_PositionChanged(object sender, PositionEventArgs e)
         {
+            if (!_permissionsResolver.IsAllPermissionsChecked(_permissionsStorage.PermissionsLocation))
+                return;
+            if (!_permissionsResolver.IsAllPermissionsChecked(_permissionsStorage.PermissionsPhone))
+                return;
+
+            DurationLabelText = DateTime.UtcNow.Subtract(StartDateTime).ToString();
+
             // TODO:
             // попробовать вынести с главного потока
 

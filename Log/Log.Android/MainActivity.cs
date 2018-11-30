@@ -2,7 +2,11 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Support.Design.Widget;
+using Log.DependenciesOS;
+using Log.Pages;
 using Lottie.Forms.Droid;
+using Xamarin.Forms;
 
 namespace Log.Droid
 {
@@ -22,7 +26,14 @@ namespace Log.Droid
             var cv = typeof(Xamarin.Forms.CarouselView);
             var assembly = Assembly.Load(cv.FullName);
 
+            //new PermissionsResolver().RequestLocationPermissions();
+            // new PermissionsResolver().RequestPhonePermissions();
             LoadApplication(new App());
+        }
+
+        public override async void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            RecordPage.StartDateTime = DateTime.UtcNow;
         }
     }
 }

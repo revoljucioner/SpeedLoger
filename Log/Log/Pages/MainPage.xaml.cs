@@ -51,8 +51,8 @@ namespace Log.Pages
 
         private async void StackLayoutStartRecord_Clicked()
         {
-            App.PermissionsResolver.RequestLocationPermissions();
-            App.PermissionsResolver.RequestPhonePermissions();
+            //App.PermissionsResolver.RequestLocationPermissions();
+            //App.PermissionsResolver.RequestPhonePermissions();
             await Navigation.PushAsync(new RecordPage(), true);
         }
 

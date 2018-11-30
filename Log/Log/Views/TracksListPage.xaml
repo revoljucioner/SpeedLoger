@@ -50,5 +50,9 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
+		<AbsoluteLayout HorizontalOptions="FillAndExpand"
+		                VerticalOptions="FillAndExpand">
+			<ActivityIndicator x:Name="activityIndicator" />
+		</AbsoluteLayout>
 	</StackLayout>
 </ContentPage>
