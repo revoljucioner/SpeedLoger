@@ -50,10 +50,10 @@
 			       VerticalOptions="Center"
 			       FontAttributes="Bold"/>
 		</StackLayout>
-		<Label x:Name="SpeedLabel" FontSize="70" Text="120" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+		<Label x:Name="SpeedLabel" FontSize="250" Text="120" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
 			<Label.FontFamily>
 				<OnPlatform x:TypeArguments="x:String">
-					<On Platform="Android" Value="Frenchpress.ttf#Frenchpress"/>
+					<On Platform="Android" Value="Droid.ttf#Droid-Regular" />
 				</OnPlatform>
 			</Label.FontFamily>
 		</Label>

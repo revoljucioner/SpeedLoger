@@ -115,8 +115,7 @@
     <AndroidAsset Include="Assets\power.json" />
     <AndroidAsset Include="Assets\updating_map%28blue-red%29.json" />
     <AndroidAsset Include="Assets\power%28red%29.json" />
-    <None Include="Assets\fonts\Frenchpress.ttf" />
-    <None Include="Assets\Frenchpress.ttf" />
+    <AndroidAsset Include="Assets\Droid.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
