@@ -2,36 +2,39 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Log"
+             xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
              x:Class="Log.Pages.RecordPage">
 
 	<Grid ColumnSpacing="5" RowSpacing="5">
-		<Grid.ColumnDefinitions >
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Label x:Name="startTimeText" Text="Start time:" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
-		<Label x:Name="startTime" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
+		<gauge:SfCircularGauge VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
 
-		<Label x:Name="durationText" Text="Duration:" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
-		<Label x:Name="duration" Text="Duration:" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
+			<gauge:SfCircularGauge.Headers>
+				<gauge:Header Text="Speedometer" ForegroundColor="Black" TextSize="20" />
+			</gauge:SfCircularGauge.Headers>
 
-		<Label x:Name="curentSpeedText" Text="Curent speed:" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
-		<Label x:Name="curentSpeed" Text="Not implement" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
+			<gauge:SfCircularGauge.Scales>
 
-		<Label x:Name="longitudeText" Text="Longitude" Grid.Column="0" Grid.Row="6" BackgroundColor="Gray"/>
-		<Label x:Name="longitude" Text="Not implement" Grid.Column="0" Grid.Row="7" BackgroundColor="Gray"/>
-		<Label x:Name="latitudeText" Text="Latitude" Grid.Column="1" Grid.Row="6" BackgroundColor="Gray"/>
-		<Label x:Name="latitude" Text="Not implement" Grid.Column="1" Grid.Row="7" BackgroundColor="Gray"/>
+				<gauge:Scale>
+
+					<gauge:Scale.Ranges>
+						<gauge:Range StartValue="0" EndValue="40"/>
+					</gauge:Scale.Ranges>
+
+					<gauge:Scale.Pointers>
+						<gauge:NeedlePointer  Value="60" />
+						<gauge:RangePointer Value="60" />
+						<gauge:MarkerPointer Value="70" />
+					</gauge:Scale.Pointers>
+
+				</gauge:Scale>
+
+			</gauge:SfCircularGauge.Scales>
+
+		</gauge:SfCircularGauge>
 
 		<Button x:Name="buttonStop" Text="stop" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
 

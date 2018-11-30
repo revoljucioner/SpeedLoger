@@ -1,10 +1,6 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Lottie.Forms.Droid;
 
