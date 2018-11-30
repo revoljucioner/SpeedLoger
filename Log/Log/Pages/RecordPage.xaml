@@ -3,41 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Log"
              xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
-             x:Class="Log.Pages.RecordPage">
+             x:Class="Log.Pages.RecordPage"
+             NavigationPage.HasNavigationBar="false">
 
-	<Grid ColumnSpacing="5" RowSpacing="5">
+	<Grid ColumnSpacing="5" RowSpacing="5" Padding="20">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
+			<RowDefinition Height="5*" />
+			<RowDefinition Height="1.5*" />
+			<RowDefinition Height="1.5*" />
+			<RowDefinition Height="1*" />
 		</Grid.RowDefinitions>
-		<gauge:SfCircularGauge VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10" Grid.Row="0">
-
-			<gauge:SfCircularGauge.Headers>
-				<gauge:Header Text="Speedometer" ForegroundColor="Black" TextSize="20" />
-			</gauge:SfCircularGauge.Headers>
-
-			<gauge:SfCircularGauge.Scales>
-
-				<gauge:Scale>
-
-					<gauge:Scale.Ranges>
-						<gauge:Range StartValue="0" EndValue="40"/>
-					</gauge:Scale.Ranges>
-
-					<gauge:Scale.Pointers>
-						<gauge:NeedlePointer  Value="60" />
-						<gauge:RangePointer Value="60" />
-						<gauge:MarkerPointer Value="70" />
-					</gauge:Scale.Pointers>
-
-				</gauge:Scale>
-
-			</gauge:SfCircularGauge.Scales>
-
-		</gauge:SfCircularGauge>
-
-		<Label x:Name="DurationLabel" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="Gray"/>
-		<Button x:Name="buttonStop" Text="stop" Grid.Row="2" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="3*" />
+		</Grid.ColumnDefinitions>
+		<StackLayout Orientation="Vertical">
+			<Label Text="D" FontSize="50" 
+			       LineBreakMode="NoWrap"
+			       HorizontalOptions="Center"
+			       Rotation="-90"
+			       VerticalOptions="Center"
+			       FontAttributes="Bold"
+			       FontFamily=""/>
+			<Label Text="E" FontSize="50" 
+			       LineBreakMode="NoWrap"
+			       HorizontalOptions="Center"
+			       Rotation="-90"
+			       VerticalOptions="Center"
+			       FontAttributes="Bold"/>
+			<Label Text="E" FontSize="50" 
+			       LineBreakMode="NoWrap"
+			       HorizontalOptions="Center"
+			       Rotation="-90"
+			       VerticalOptions="Center"
+			       FontAttributes="Bold"/>
+			<Label Text="P" FontSize="50" 
+			       LineBreakMode="NoWrap"
+			       HorizontalOptions="Center"
+			       Rotation="-90"
+			       VerticalOptions="Center"
+			       FontAttributes="Bold"/>
+			<Label Text="S" FontSize="50" 
+			       LineBreakMode="NoWrap"
+			       HorizontalOptions="Center"
+			       Rotation="-90"
+			       VerticalOptions="Center"
+			       FontAttributes="Bold"/>
+		</StackLayout>
+		<Label x:Name="SpeedLabel" FontSize="70" Text="120" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+			<Label.FontFamily>
+				<OnPlatform x:TypeArguments="x:String">
+					<On Platform="Android" Value="Frenchpress.ttf#Frenchpress"/>
+				</OnPlatform>
+			</Label.FontFamily>
+		</Label>
+		<Label x:Name="MeasurementUnit" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Text="km/h" Grid.Row="1" Grid.Column="0" />
+		<Label x:Name="DurationTextLabel" FontSize="20"  HorizontalOptions="Start" VerticalOptions="Center" Text="Duration" Grid.Row="2" Grid.Column="0" />
+		<Label x:Name="DurationLabel" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" Text="10:00:00" Grid.Row="2" Grid.Column="1" />
+		<Button x:Name="buttonStop" Text="stop" Grid.Row="3" Grid.ColumnSpan="2" Clicked="ButtonStop_Clicked" />
 
 	</Grid>
 
