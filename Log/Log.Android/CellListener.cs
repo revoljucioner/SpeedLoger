@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Android.Content;
 using Android.Telephony;
 using Log.DependenciesOS;
@@ -9,6 +10,7 @@ using Xamarin.Forms;
 [assembly: Xamarin.Forms.Dependency(typeof(CellListener))]
 namespace Log.Droid
 {
+    [Obsolete("Created for cell analyze in diploma")]
     public class CellListener : ICellAnalyzer
     {
         private readonly TelephonyManager _telephonyManager;
@@ -25,13 +27,13 @@ namespace Log.Droid
 
             if (currentCellInfo is CellInfoWcdma)
             {
-                var a = (CellInfoWcdma) currentCellInfo;
+                var a = (CellInfoWcdma)currentCellInfo;
                 cellDataEntity.Cid = a.CellIdentity.Cid;
                 cellDataEntity.CellSignalStrength = a.CellSignalStrength.Dbm;
             }
             else if (currentCellInfo is CellInfoGsm)
             {
-                var a = (CellInfoGsm) currentCellInfo;
+                var a = (CellInfoGsm)currentCellInfo;
                 cellDataEntity.Cid = a.CellIdentity.Cid;
                 cellDataEntity.CellSignalStrength = a.CellSignalStrength.Dbm;
             }

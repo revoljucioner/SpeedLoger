@@ -14,8 +14,6 @@ namespace Log.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public DateTime Time { get; set; }
-        public int Cid { get; set; }
-        public int CellSignalStrength { get; set; }
 
         public SnappedPointDb()
         {
@@ -36,8 +34,7 @@ namespace Log.Models
         public SnappedPointRequest ToSnappedPointRequest()
         {
             var location = new Location(Latitude, Longitude);
-            var cellData = new CellData{Cid = Cid, CellSignalStrength = CellSignalStrength};
-            var snappedPointRequest = new SnappedPointRequest { Location = location, time = Time, CellData = cellData };
+            var snappedPointRequest = new SnappedPointRequest { Location = location, time = Time };
             return snappedPointRequest;
         }
     }

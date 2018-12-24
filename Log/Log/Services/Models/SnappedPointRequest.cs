@@ -1,5 +1,4 @@
 ﻿using System;
-using Log.Models;
 
 namespace Log.Services.Models
 {
@@ -7,6 +6,5 @@ namespace Log.Services.Models
     {
         public Location Location { get; set; }
         public DateTime time { get; set; }
-        public CellData CellData { get; set; }
     }
 }
