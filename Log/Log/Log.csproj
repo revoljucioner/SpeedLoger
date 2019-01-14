@@ -18,7 +18,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="2.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="SpeedServer.Models" Version="0.9.1" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.3.0.36" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
