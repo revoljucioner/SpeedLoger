@@ -1,5 +1,5 @@
 ﻿using System;
-using Log.Services.Models;
+using SpeedServer.Models;
 using SQLite;
 using Xamarin.Forms.Maps;
 

@@ -4,9 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Log.Extensions;
 using Log.Pages;
 using Log.Services.Controllers;
-using Log.Services.Models;
+using SpeedServer.Models;
 using Xamarin.Forms;
 
 namespace Log.ViewModels

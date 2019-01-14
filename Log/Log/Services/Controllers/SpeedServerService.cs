@@ -4,8 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Log.Services.Models;
 using Newtonsoft.Json;
+using SpeedServer.Models;
 
 namespace Log.Services.Controllers
 {
